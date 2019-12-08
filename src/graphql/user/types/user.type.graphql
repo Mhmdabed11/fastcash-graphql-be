@@ -17,7 +17,6 @@ type Mutation {
   login(email: String!, password: String!): AuthyPayload
 
   updateUser(
-    id: ID!
     firstName: String
     lastName: String
     password: String
@@ -28,7 +27,7 @@ type Mutation {
     about: String
   ): User
 
-  deleteUser(id: ID!): User
+  deleteUser(id: ID!): String
 }
 
 # Type Definitions
@@ -40,7 +39,7 @@ type User {
   country: String!
   phoneNumber: String
   headline: String
-  skills: [String]!
+  skills: [String!]
   about: String
 }
 
