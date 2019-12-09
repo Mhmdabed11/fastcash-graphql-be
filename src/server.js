@@ -10,9 +10,10 @@ const isAuthenticated = rule({ cache: "contextual" })(
   async (parent, args, context, info) => {
     try {
       const Authorization = context.request.get("Authorization");
-      if (!Authorization) {
+      if (!Authorization || Authorization.includes("Bearer ") === false) {
         return false;
       }
+
       const token = Authorization.replace("Bearer ", "");
       const valid = jwt.verify(token, APP_SECRET);
       if (!valid) {
@@ -32,13 +33,15 @@ const isAuthenticated = rule({ cache: "contextual" })(
 
 const permissions = shield({
   Query: {
-    user: isAuthenticated
+    user: isAuthenticated,
+    post: isAuthenticated
   },
   Mutation: {
     signup: not(isAuthenticated),
     login: not(isAuthenticated),
     updateUser: isAuthenticated,
-    deleteUser: isAuthenticated
+    deleteUser: isAuthenticated,
+    createPost: isAuthenticated
   }
 });
 

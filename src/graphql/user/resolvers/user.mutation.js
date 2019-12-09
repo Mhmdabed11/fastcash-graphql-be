@@ -1,4 +1,3 @@
-import { prisma } from "../../../../prisma/generated/prisma-client";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APP_SECRET, getUserId } from "../../../utils";

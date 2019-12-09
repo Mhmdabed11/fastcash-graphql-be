@@ -10,3 +10,14 @@ type User {
   skills:[String!]
   about: String
 }
+
+type Post {
+  id: ID! @id
+  title: String!
+  category: String!
+  location: String!
+  offer: Int!
+  currency: String!
+  description: String!
+  skillsRequired: [String!]!
+}
