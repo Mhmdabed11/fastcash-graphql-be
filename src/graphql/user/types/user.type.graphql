@@ -1,4 +1,5 @@
-# Query
+#import Post from '../../post/types/post.type.graphql'
+
 type Query {
   user(id: ID!): User
   users: [User!]!
@@ -41,6 +42,7 @@ type User {
   headline: String
   skills: [String!]
   about: String
+  posts: [Post!]!
 }
 
 type AuthyPayload {
