@@ -41,7 +41,9 @@ const permissions = shield({
     login: not(isAuthenticated),
     updateUser: isAuthenticated,
     deleteUser: isAuthenticated,
-    createPost: isAuthenticated
+    createPost: isAuthenticated,
+    updatePost: isAuthenticated,
+    deletePost: isAuthenticated
   }
 });
 
