@@ -2,9 +2,11 @@ import { getUserId } from "../../../utils";
 
 const Mutation = {
   createPost: async (root, args, context, info) => {
+    const userId = getUserId(context);
     const post = await context.prisma.createPost({
       ...args,
-      skillsRequired: { set: args.skillsRequired }
+      skillsRequired: { set: args.skillsRequired },
+      author: { connect: { id: userId } }
     });
     return post;
   },

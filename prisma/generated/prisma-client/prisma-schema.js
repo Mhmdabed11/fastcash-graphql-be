@@ -58,6 +58,7 @@ type Post {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  author: User!
 }
 
 type PostConnection {
@@ -75,10 +76,27 @@ input PostCreateInput {
   currency: String!
   description: String!
   skillsRequired: PostCreateskillsRequiredInput
+  author: UserCreateOneWithoutPostsInput!
+}
+
+input PostCreateManyWithoutAuthorInput {
+  create: [PostCreateWithoutAuthorInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 input PostCreateskillsRequiredInput {
   set: [String!]
+}
+
+input PostCreateWithoutAuthorInput {
+  id: ID
+  title: String!
+  category: String!
+  location: String!
+  offer: Int!
+  currency: String!
+  description: String!
+  skillsRequired: PostCreateskillsRequiredInput
 }
 
 type PostEdge {
@@ -114,6 +132,104 @@ type PostPreviousValues {
   skillsRequired: [String!]!
 }
 
+input PostScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  offer: Int
+  offer_not: Int
+  offer_in: [Int!]
+  offer_not_in: [Int!]
+  offer_lt: Int
+  offer_lte: Int
+  offer_gt: Int
+  offer_gte: Int
+  currency: String
+  currency_not: String
+  currency_in: [String!]
+  currency_not_in: [String!]
+  currency_lt: String
+  currency_lte: String
+  currency_gt: String
+  currency_gte: String
+  currency_contains: String
+  currency_not_contains: String
+  currency_starts_with: String
+  currency_not_starts_with: String
+  currency_ends_with: String
+  currency_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
+}
+
 type PostSubscriptionPayload {
   mutation: MutationType!
   node: Post
@@ -140,6 +256,17 @@ input PostUpdateInput {
   currency: String
   description: String
   skillsRequired: PostUpdateskillsRequiredInput
+  author: UserUpdateOneRequiredWithoutPostsInput
+}
+
+input PostUpdateManyDataInput {
+  title: String
+  category: String
+  location: String
+  offer: Int
+  currency: String
+  description: String
+  skillsRequired: PostUpdateskillsRequiredInput
 }
 
 input PostUpdateManyMutationInput {
@@ -152,8 +279,46 @@ input PostUpdateManyMutationInput {
   skillsRequired: PostUpdateskillsRequiredInput
 }
 
+input PostUpdateManyWithoutAuthorInput {
+  create: [PostCreateWithoutAuthorInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
+}
+
 input PostUpdateskillsRequiredInput {
   set: [String!]
+}
+
+input PostUpdateWithoutAuthorDataInput {
+  title: String
+  category: String
+  location: String
+  offer: Int
+  currency: String
+  description: String
+  skillsRequired: PostUpdateskillsRequiredInput
+}
+
+input PostUpdateWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutAuthorDataInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutAuthorDataInput!
+  create: PostCreateWithoutAuthorInput!
 }
 
 input PostWhereInput {
@@ -249,6 +414,7 @@ input PostWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  author: UserWhereInput
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -284,6 +450,7 @@ type User {
   headline: String
   skills: [String!]!
   about: String
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 type UserConnection {
@@ -303,10 +470,29 @@ input UserCreateInput {
   headline: String
   skills: UserCreateskillsInput
   about: String
+  posts: PostCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateskillsInput {
   set: [String!]
+}
+
+input UserCreateWithoutPostsInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  country: String
+  phoneNumber: String
+  headline: String
+  skills: UserCreateskillsInput
+  about: String
 }
 
 type UserEdge {
@@ -376,6 +562,7 @@ input UserUpdateInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
+  posts: PostUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
@@ -390,8 +577,32 @@ input UserUpdateManyMutationInput {
   about: String
 }
 
+input UserUpdateOneRequiredWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateskillsInput {
   set: [String!]
+}
+
+input UserUpdateWithoutPostsDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  country: String
+  phoneNumber: String
+  headline: String
+  skills: UserUpdateskillsInput
+  about: String
+}
+
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
 }
 
 input UserWhereInput {
@@ -521,6 +732,9 @@ input UserWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

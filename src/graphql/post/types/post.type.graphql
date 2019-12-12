@@ -7,10 +7,11 @@ type Post {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  author: User!
 }
 
 type Query {
-  post(id: ID!): Post
+  post(id: ID!): Post!
   posts: [Post!]!
 }
 

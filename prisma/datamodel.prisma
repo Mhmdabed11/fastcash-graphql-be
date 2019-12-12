@@ -9,6 +9,7 @@ type User {
   headline: String
   skills:[String!]
   about: String
+  posts:[Post!]! @relation(link: INLINE)
 }
 
 type Post {
@@ -20,4 +21,5 @@ type Post {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  author: User! 
 }
