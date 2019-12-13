@@ -9,6 +9,7 @@ type User {
   headline: String
   skills:[String!]
   about: String
+  emailVerified: Boolean! @default(value: "false")
   posts:[Post!]! @relation(link: INLINE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

@@ -44,6 +44,7 @@ type User {
   posts: [Post!]!
   updatedAt: String!
   createdAt: String!
+  emailVerified: Boolean!
 }
 
 type AuthyPayload {
