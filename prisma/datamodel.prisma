@@ -10,6 +10,8 @@ type User {
   skills:[String!]
   about: String
   posts:[Post!]! @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Post {
@@ -22,4 +24,6 @@ type Post {
   description: String!
   skillsRequired: [String!]!
   author: User! 
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

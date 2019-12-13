@@ -154,7 +154,11 @@ export type PostOrderByInput =
   | "currency_ASC"
   | "currency_DESC"
   | "description_ASC"
-  | "description_DESC";
+  | "description_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -174,7 +178,11 @@ export type UserOrderByInput =
   | "headline_ASC"
   | "headline_DESC"
   | "about_ASC"
-  | "about_DESC";
+  | "about_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -185,18 +193,6 @@ export interface PostUpdateskillsRequiredInput {
 export type PostWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
-
-export interface PostCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  category: String;
-  location: String;
-  offer: Int;
-  currency: String;
-  description: String;
-  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
-  author: UserCreateOneWithoutPostsInput;
-}
 
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
@@ -212,17 +208,28 @@ export interface UserCreateInput {
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
 }
 
-export interface PostCreateskillsRequiredInput {
-  set?: Maybe<String[] | String>;
+export interface UserUpdateWithoutPostsDataInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  country?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  headline?: Maybe<String>;
+  skills?: Maybe<UserUpdateskillsInput>;
+  about?: Maybe<String>;
 }
 
-export interface UserUpdateskillsInput {
-  set?: Maybe<String[] | String>;
-}
-
-export interface UserCreateOneWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PostCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  category: String;
+  location: String;
+  offer: Int;
+  currency: String;
+  description: String;
+  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
+  author: UserCreateOneWithoutPostsInput;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -234,6 +241,32 @@ export interface UserSubscriptionWhereInput {
   AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
   OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface PostCreateskillsRequiredInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface UserUpdateManyMutationInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  country?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  headline?: Maybe<String>;
+  skills?: Maybe<UserUpdateskillsInput>;
+  about?: Maybe<String>;
+}
+
+export interface UserCreateOneWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput;
+  data: PostUpdateManyDataInput;
 }
 
 export interface UserCreateWithoutPostsInput {
@@ -249,54 +282,14 @@ export interface UserCreateWithoutPostsInput {
   about?: Maybe<String>;
 }
 
-export interface UserUpdateManyMutationInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  country?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  headline?: Maybe<String>;
-  skills?: Maybe<UserUpdateskillsInput>;
-  about?: Maybe<String>;
+export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput;
+  update: PostUpdateWithoutAuthorDataInput;
+  create: PostCreateWithoutAuthorInput;
 }
 
 export interface UserCreateskillsInput {
   set?: Maybe<String[] | String>;
-}
-
-export interface PostUpdateManyWithWhereNestedInput {
-  where: PostScalarWhereInput;
-  data: PostUpdateManyDataInput;
-}
-
-export interface PostUpdateInput {
-  title?: Maybe<String>;
-  category?: Maybe<String>;
-  location?: Maybe<String>;
-  offer?: Maybe<Int>;
-  currency?: Maybe<String>;
-  description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
-  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserUpdateInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  country?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  headline?: Maybe<String>;
-  skills?: Maybe<UserUpdateskillsInput>;
-  about?: Maybe<String>;
-  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
 }
 
 export interface PostUpdateWithoutAuthorDataInput {
@@ -309,11 +302,15 @@ export interface PostUpdateWithoutAuthorDataInput {
   skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutPostsInput {
-  create?: Maybe<UserCreateWithoutPostsInput>;
-  update?: Maybe<UserUpdateWithoutPostsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutPostsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
+export interface PostUpdateInput {
+  title?: Maybe<String>;
+  category?: Maybe<String>;
+  location?: Maybe<String>;
+  offer?: Maybe<Int>;
+  currency?: Maybe<String>;
+  description?: Maybe<String>;
+  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
 }
 
 export interface PostUpdateManyWithoutAuthorInput {
@@ -336,16 +333,15 @@ export interface PostUpdateManyWithoutAuthorInput {
   >;
 }
 
-export interface UserUpdateWithoutPostsDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  country?: Maybe<String>;
-  phoneNumber?: Maybe<String>;
-  headline?: Maybe<String>;
-  skills?: Maybe<UserUpdateskillsInput>;
-  about?: Maybe<String>;
+export interface PostCreateWithoutAuthorInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  category: String;
+  location: String;
+  offer: Int;
+  currency: String;
+  description: String;
+  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
 }
 
 export interface UserWhereInput {
@@ -478,9 +474,42 @@ export interface UserWhereInput {
   posts_every?: Maybe<PostWhereInput>;
   posts_some?: Maybe<PostWhereInput>;
   posts_none?: Maybe<PostWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutPostsInput {
+  create?: Maybe<UserCreateWithoutPostsInput>;
+  update?: Maybe<UserUpdateWithoutPostsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutPostsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface PostUpdateManyDataInput {
+  title?: Maybe<String>;
+  category?: Maybe<String>;
+  location?: Maybe<String>;
+  offer?: Maybe<Int>;
+  currency?: Maybe<String>;
+  description?: Maybe<String>;
+  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
 }
 
 export interface PostWhereInput {
@@ -577,41 +606,35 @@ export interface PostWhereInput {
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
   author?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<PostWhereInput[] | PostWhereInput>;
   OR?: Maybe<PostWhereInput[] | PostWhereInput>;
   NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
 }
 
-export interface PostUpdateManyDataInput {
-  title?: Maybe<String>;
-  category?: Maybe<String>;
-  location?: Maybe<String>;
-  offer?: Maybe<Int>;
-  currency?: Maybe<String>;
-  description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
-}
-
-export interface PostUpsertWithWhereUniqueWithoutAuthorInput {
-  where: PostWhereUniqueInput;
-  update: PostUpdateWithoutAuthorDataInput;
-  create: PostCreateWithoutAuthorInput;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface PostCreateManyWithoutAuthorInput {
   create?: Maybe<PostCreateWithoutAuthorInput[] | PostCreateWithoutAuthorInput>;
   connect?: Maybe<PostWhereUniqueInput[] | PostWhereUniqueInput>;
-}
-
-export interface PostCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  category: String;
-  location: String;
-  offer: Int;
-  currency: String;
-  description: String;
-  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
 }
 
 export interface PostUpdateManyMutationInput {
@@ -627,6 +650,10 @@ export interface PostUpdateManyMutationInput {
 export interface UserUpsertWithoutPostsInput {
   update: UserUpdateWithoutPostsDataInput;
   create: UserCreateWithoutPostsInput;
+}
+
+export interface UserUpdateskillsInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -727,6 +754,22 @@ export interface PostScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   OR?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
   NOT?: Maybe<PostScalarWhereInput[] | PostScalarWhereInput>;
@@ -741,6 +784,19 @@ export interface PostSubscriptionWhereInput {
   AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
   OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
   NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+}
+
+export interface UserUpdateInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  country?: Maybe<String>;
+  phoneNumber?: Maybe<String>;
+  headline?: Maybe<String>;
+  skills?: Maybe<UserUpdateskillsInput>;
+  about?: Maybe<String>;
+  posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
 }
 
 export interface NodeNode {
@@ -758,6 +814,8 @@ export interface UserPreviousValues {
   headline?: String;
   skills: String[];
   about?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface UserPreviousValuesPromise
@@ -773,6 +831,8 @@ export interface UserPreviousValuesPromise
   headline: () => Promise<String>;
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -788,6 +848,8 @@ export interface UserPreviousValuesSubscription
   headline: () => Promise<AsyncIterator<String>>;
   skills: () => Promise<AsyncIterator<String[]>>;
   about: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface AggregatePost {
@@ -806,29 +868,63 @@ export interface AggregatePostSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostSubscriptionPayload {
-  mutation: MutationType;
-  node: Post;
-  updatedFields: String[];
-  previousValues: PostPreviousValues;
+export interface Post {
+  id: ID_Output;
+  title: String;
+  category: String;
+  location: String;
+  offer: Int;
+  currency: String;
+  description: String;
+  skillsRequired: String[];
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
+export interface PostPromise extends Promise<Post>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  category: () => Promise<String>;
+  location: () => Promise<String>;
+  offer: () => Promise<Int>;
+  currency: () => Promise<String>;
+  description: () => Promise<String>;
+  skillsRequired: () => Promise<String[]>;
+  author: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+export interface PostSubscription
+  extends Promise<AsyncIterator<Post>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
+  offer: () => Promise<AsyncIterator<Int>>;
+  currency: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  author: <T = UserSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface PostNullablePromise
+  extends Promise<Post | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  category: () => Promise<String>;
+  location: () => Promise<String>;
+  offer: () => Promise<Int>;
+  currency: () => Promise<String>;
+  description: () => Promise<String>;
+  skillsRequired: () => Promise<String[]>;
+  author: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PostEdge {
@@ -859,6 +955,8 @@ export interface User {
   headline?: String;
   skills: String[];
   about?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -881,6 +979,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface UserSubscription
@@ -905,6 +1005,8 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserNullablePromise
@@ -929,6 +1031,8 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface AggregateUser {
@@ -947,55 +1051,29 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Post {
-  id: ID_Output;
-  title: String;
-  category: String;
-  location: String;
-  offer: Int;
-  currency: String;
-  description: String;
-  skillsRequired: String[];
+export interface PostSubscriptionPayload {
+  mutation: MutationType;
+  node: Post;
+  updatedFields: String[];
+  previousValues: PostPreviousValues;
 }
 
-export interface PostPromise extends Promise<Post>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  category: () => Promise<String>;
-  location: () => Promise<String>;
-  offer: () => Promise<Int>;
-  currency: () => Promise<String>;
-  description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
-  author: <T = UserPromise>() => T;
-}
-
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
+export interface PostSubscriptionPayloadPromise
+  extends Promise<PostSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
-  location: () => Promise<AsyncIterator<String>>;
-  offer: () => Promise<AsyncIterator<Int>>;
-  currency: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  skillsRequired: () => Promise<AsyncIterator<String[]>>;
-  author: <T = UserSubscription>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = PostPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PostPreviousValuesPromise>() => T;
 }
 
-export interface PostNullablePromise
-  extends Promise<Post | null>,
+export interface PostSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  category: () => Promise<String>;
-  location: () => Promise<String>;
-  offer: () => Promise<Int>;
-  currency: () => Promise<String>;
-  description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
-  author: <T = UserPromise>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PostSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
 export interface PostConnection {
@@ -1109,6 +1187,8 @@ export interface PostPreviousValues {
   currency: String;
   description: String;
   skillsRequired: String[];
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface PostPreviousValuesPromise
@@ -1122,6 +1202,8 @@ export interface PostPreviousValuesPromise
   currency: () => Promise<String>;
   description: () => Promise<String>;
   skillsRequired: () => Promise<String[]>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface PostPreviousValuesSubscription
@@ -1135,6 +1217,8 @@ export interface PostPreviousValuesSubscription
   currency: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserConnection {
@@ -1172,14 +1256,24 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+DateTime scalar input type, allowing Date
 */
-export type Int = number;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 /**
  * Model Metadata

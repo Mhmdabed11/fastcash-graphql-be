@@ -15,6 +15,8 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
@@ -59,6 +61,8 @@ type Post {
   description: String!
   skillsRequired: [String!]!
   author: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type PostConnection {
@@ -119,6 +123,10 @@ enum PostOrderByInput {
   currency_DESC
   description_ASC
   description_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type PostPreviousValues {
@@ -130,6 +138,8 @@ type PostPreviousValues {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input PostScalarWhereInput {
@@ -225,6 +235,22 @@ input PostScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [PostScalarWhereInput!]
   OR: [PostScalarWhereInput!]
   NOT: [PostScalarWhereInput!]
@@ -415,6 +441,22 @@ input PostWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   author: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -451,6 +493,8 @@ type User {
   skills: [String!]!
   about: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -519,6 +563,10 @@ enum UserOrderByInput {
   headline_DESC
   about_ASC
   about_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -532,6 +580,8 @@ type UserPreviousValues {
   headline: String
   skills: [String!]!
   about: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -735,6 +785,22 @@ input UserWhereInput {
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

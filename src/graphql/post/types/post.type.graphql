@@ -8,6 +8,8 @@ type Post {
   description: String!
   skillsRequired: [String!]!
   author: User!
+  updatedAt: String!
+  createdAt: String!
 }
 
 type Query {

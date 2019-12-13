@@ -4,8 +4,16 @@ import { APP_SECRET, getUserId } from "../../../utils";
 
 const Mutation = {
   signup: async (root, args, context, info) => {
+    if (args.password !== args.confirmPassword) {
+      throw new Error("passwords do not match");
+    }
+    const argsWithoutConfirmPassword = { ...args };
+    delete argsWithoutConfirmPassword.confirmPassword;
     const password = await bcrypt.hash(args.password, 10);
-    const user = await context.prisma.createUser({ ...args, password });
+    const user = await context.prisma.createUser({
+      ...argsWithoutConfirmPassword,
+      password
+    });
     const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
     return {
