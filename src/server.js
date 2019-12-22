@@ -8,7 +8,7 @@ import { rule, shield, not } from "graphql-shield";
 
 const permissions = shield({
   Query: {
-    user: isAuthenticated,
+    // user: isAuthenticated,
     post: isAuthenticated
   },
   Mutation: {
