@@ -1,6 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APP_SECRET, getUserId } from "../../../utils";
+const {
+  ForbiddenError,
+  UserInputError,
+  ApolloError,
+  AuthenticationError
+} = require("apollo-server-core");
 const sgMail = require("@sendgrid/mail");
 const MailGen = require("mailgen");
 const SENDGRID_API_KEY =
@@ -36,74 +42,99 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 const Mutation = {
   signup: async (root, args, context, info) => {
-    if (args.password !== args.confirmPassword) {
-      throw new Error("passwords do not match");
+    try {
+      if (args.password !== args.confirmPassword) {
+        throw new UserInputError("Passwords do not match", 400);
+      }
+      const argsWithoutConfirmPassword = { ...args };
+      delete argsWithoutConfirmPassword.confirmPassword;
+      const password = await bcrypt.hash(args.password, 10);
+
+      // check if user exists and throw error if it does
+      const user = await context.prisma.user({ email: args.email });
+      if (user) {
+        throw new ForbiddenError("User already exists", 403);
+      }
+      const newUser = await context.prisma.createUser({
+        ...argsWithoutConfirmPassword,
+        password
+      });
+      const token = jwt.sign({ userId: newUser.id }, APP_SECRET);
+      // const msg = {
+      //   to: args.email,
+      //   from: "mabed4297@gmail.com",
+      //   subject: "Sending with Twilio SendGrid is Fun",
+      //   text: "and easy to do anywhere, even with Node.js",
+      //   html: emailTemplate
+      // };
+      // sgMail.send(msg);
+      return {
+        token,
+        user: newUser
+      };
+    } catch (err) {
+      throw new ApolloError(err, 500);
     }
-    const argsWithoutConfirmPassword = { ...args };
-    delete argsWithoutConfirmPassword.confirmPassword;
-    const password = await bcrypt.hash(args.password, 10);
-    const user = await context.prisma.createUser({
-      ...argsWithoutConfirmPassword,
-      password
-    });
-    const token = jwt.sign({ userId: user.id }, APP_SECRET);
-    // const msg = {
-    //   to: args.email,
-    //   from: "mabed4297@gmail.com",
-    //   subject: "Sending with Twilio SendGrid is Fun",
-    //   text: "and easy to do anywhere, even with Node.js",
-    //   html: emailTemplate
-    // };
-    // sgMail.send(msg);
-    return {
-      token,
-      user
-    };
   },
   login: async (root, args, context, info) => {
-    const user = await context.prisma.user({ email: args.email });
-    if (!user) {
-      throw new Error("invalid username or password");
-    }
-    const valid = await bcrypt.compare(args.password, user.password);
-    if (!valid) {
-      throw new Error("invalid username or password");
-    }
-    const token = jwt.sign({ userId: user.id }, APP_SECRET);
+    try {
+      const user = await context.prisma.user({ email: args.email });
+      if (!user) {
+        throw new AuthenticationError("Invalid username or password", 401);
+      }
+      const valid = await bcrypt.compare(args.password, user.password);
+      if (!valid) {
+        throw new AuthenticationError("Invalid username or password", 401);
+      }
+      const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
-    return {
-      token,
-      user
-    };
+      return {
+        token,
+        user
+      };
+    } catch (err) {
+      throw new ApolloError(err, 500);
+    }
   },
   updateUser: async (root, args, context, info) => {
-    const id = getUserId(context);
-    const user = await context.prisma.user({ id });
-    if (!user) {
-      throw new Error("user not found");
+    try {
+      const id = getUserId(context);
+      const user = await context.prisma.user({ id });
+      if (!user) {
+        throw new Error("User not found", 404);
+      }
+      const updatedUser = await context.prisma.updateUser({
+        where: { id },
+        data: args
+      });
+      return updatedUser;
+    } catch (err) {
+      throw new ApolloError(err, 500);
     }
-    const updateUser = await context.prisma.updateUser({
-      where: { id },
-      data: args
-    });
-    return updateUser;
   },
   deleteUser: async (root, args, context, info) => {
-    const id = getUserId(context);
-    if (id !== args.id) {
-      throw new Error("you cannot delete the profile of another user");
-    }
-    const user = await context.prisma.user({ id: args.id });
-    await context.prisma.deleteManyPosts({
-      author: {
-        id: user.id
+    try {
+      const id = getUserId(context);
+      if (id !== args.id) {
+        throw new ForbiddenError(
+          "You cannot delete the profile of another user",
+          403
+        );
       }
-    });
-    if (!user) {
-      throw new Error("user not found");
+      const user = await context.prisma.user({ id: args.id });
+      if (!user) {
+        throw new Error("User not found", 404);
+      }
+      await context.prisma.deleteManyPosts({
+        author: {
+          id: user.id
+        }
+      });
+      await context.prisma.deleteUser({ id: args.id });
+      return "The user has been deleted";
+    } catch (err) {
+      throw new ApolloError(err, 500);
     }
-    await context.prisma.deleteUser({ id: args.id });
-    return "the user has been deleted";
   }
 };
 export default Mutation;
