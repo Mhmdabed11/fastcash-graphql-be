@@ -59,7 +59,17 @@ const Mutation = {
         ...argsWithoutConfirmPassword,
         password
       });
+      bcrypt.hash(newUser.email, 10, async function(err, hash) {
+        if (err) {
+          throw new ApolloError(err, 500);
+        }
+        await context.prisma.createEmailVerificationHash({
+          hash
+        });
+      });
+
       const token = jwt.sign({ userId: newUser.id }, APP_SECRET);
+
       // const msg = {
       //   to: args.email,
       //   from: "mabed4297@gmail.com",

@@ -28,3 +28,8 @@ type Post {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
+
+type EmailVerificationHash {
+  id: ID! @id
+  hash: String!
+}

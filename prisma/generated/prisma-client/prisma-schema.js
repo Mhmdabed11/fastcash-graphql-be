@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregatePost {
+/* GraphQL */ `type AggregateEmailVerificationHash {
+  count: Int!
+}
+
+type AggregatePost {
   count: Int!
 }
 
@@ -17,9 +21,112 @@ type BatchPayload {
 
 scalar DateTime
 
+type EmailVerificationHash {
+  id: ID!
+  hash: String!
+}
+
+type EmailVerificationHashConnection {
+  pageInfo: PageInfo!
+  edges: [EmailVerificationHashEdge]!
+  aggregate: AggregateEmailVerificationHash!
+}
+
+input EmailVerificationHashCreateInput {
+  id: ID
+  hash: String!
+}
+
+type EmailVerificationHashEdge {
+  node: EmailVerificationHash!
+  cursor: String!
+}
+
+enum EmailVerificationHashOrderByInput {
+  id_ASC
+  id_DESC
+  hash_ASC
+  hash_DESC
+}
+
+type EmailVerificationHashPreviousValues {
+  id: ID!
+  hash: String!
+}
+
+type EmailVerificationHashSubscriptionPayload {
+  mutation: MutationType!
+  node: EmailVerificationHash
+  updatedFields: [String!]
+  previousValues: EmailVerificationHashPreviousValues
+}
+
+input EmailVerificationHashSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: EmailVerificationHashWhereInput
+  AND: [EmailVerificationHashSubscriptionWhereInput!]
+  OR: [EmailVerificationHashSubscriptionWhereInput!]
+  NOT: [EmailVerificationHashSubscriptionWhereInput!]
+}
+
+input EmailVerificationHashUpdateInput {
+  hash: String
+}
+
+input EmailVerificationHashUpdateManyMutationInput {
+  hash: String
+}
+
+input EmailVerificationHashWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  hash: String
+  hash_not: String
+  hash_in: [String!]
+  hash_not_in: [String!]
+  hash_lt: String
+  hash_lte: String
+  hash_gt: String
+  hash_gte: String
+  hash_contains: String
+  hash_not_contains: String
+  hash_starts_with: String
+  hash_not_starts_with: String
+  hash_ends_with: String
+  hash_not_ends_with: String
+  AND: [EmailVerificationHashWhereInput!]
+  OR: [EmailVerificationHashWhereInput!]
+  NOT: [EmailVerificationHashWhereInput!]
+}
+
+input EmailVerificationHashWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createEmailVerificationHash(data: EmailVerificationHashCreateInput!): EmailVerificationHash!
+  updateEmailVerificationHash(data: EmailVerificationHashUpdateInput!, where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  updateManyEmailVerificationHashes(data: EmailVerificationHashUpdateManyMutationInput!, where: EmailVerificationHashWhereInput): BatchPayload!
+  upsertEmailVerificationHash(where: EmailVerificationHashWhereUniqueInput!, create: EmailVerificationHashCreateInput!, update: EmailVerificationHashUpdateInput!): EmailVerificationHash!
+  deleteEmailVerificationHash(where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  deleteManyEmailVerificationHashes(where: EmailVerificationHashWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -467,6 +574,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  emailVerificationHash(where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  emailVerificationHashes(where: EmailVerificationHashWhereInput, orderBy: EmailVerificationHashOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EmailVerificationHash]!
+  emailVerificationHashesConnection(where: EmailVerificationHashWhereInput, orderBy: EmailVerificationHashOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EmailVerificationHashConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -477,6 +587,7 @@ type Query {
 }
 
 type Subscription {
+  emailVerificationHash(where: EmailVerificationHashSubscriptionWhereInput): EmailVerificationHashSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
