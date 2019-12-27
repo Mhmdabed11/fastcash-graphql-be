@@ -234,8 +234,8 @@ export type UserOrderByInput =
   | "headline_DESC"
   | "about_ASC"
   | "about_DESC"
-  | "emailVerified_ASC"
-  | "emailVerified_DESC"
+  | "active_ASC"
+  | "active_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -257,6 +257,7 @@ export interface PostCreateInput {
 
 export type EmailVerificationHashWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  hash?: Maybe<String>;
 }>;
 
 export interface UserUpdateInput {
@@ -269,7 +270,7 @@ export interface UserUpdateInput {
   headline?: Maybe<String>;
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
 }
 
@@ -283,7 +284,7 @@ export interface UserUpdateWithoutPostsDataInput {
   headline?: Maybe<String>;
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
 }
 
 export interface PostCreateWithoutAuthorInput {
@@ -308,7 +309,7 @@ export interface UserCreateWithoutPostsInput {
   headline?: Maybe<String>;
   skills?: Maybe<UserCreateskillsInput>;
   about?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
 }
 
 export interface PostCreateManyWithoutAuthorInput {
@@ -337,7 +338,7 @@ export interface UserUpdateManyMutationInput {
   headline?: Maybe<String>;
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
 }
 
 export interface PostUpdateManyDataInput {
@@ -609,7 +610,7 @@ export interface UserCreateInput {
   headline?: Maybe<String>;
   skills?: Maybe<UserCreateskillsInput>;
   about?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
 }
 
@@ -910,8 +911,8 @@ export interface UserWhereInput {
   about_not_starts_with?: Maybe<String>;
   about_ends_with?: Maybe<String>;
   about_not_ends_with?: Maybe<String>;
-  emailVerified?: Maybe<Boolean>;
-  emailVerified_not?: Maybe<Boolean>;
+  active?: Maybe<Boolean>;
+  active_not?: Maybe<Boolean>;
   posts_every?: Maybe<PostWhereInput>;
   posts_some?: Maybe<PostWhereInput>;
   posts_none?: Maybe<PostWhereInput>;
@@ -955,7 +956,7 @@ export interface UserPreviousValues {
   headline?: String;
   skills: String[];
   about?: String;
-  emailVerified: Boolean;
+  active: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -973,7 +974,7 @@ export interface UserPreviousValuesPromise
   headline: () => Promise<String>;
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
-  emailVerified: () => Promise<Boolean>;
+  active: () => Promise<Boolean>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -991,7 +992,7 @@ export interface UserPreviousValuesSubscription
   headline: () => Promise<AsyncIterator<String>>;
   skills: () => Promise<AsyncIterator<String[]>>;
   about: () => Promise<AsyncIterator<String>>;
-  emailVerified: () => Promise<AsyncIterator<Boolean>>;
+  active: () => Promise<AsyncIterator<Boolean>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1007,7 +1008,7 @@ export interface User {
   headline?: String;
   skills: String[];
   about?: String;
-  emailVerified: Boolean;
+  active: Boolean;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1023,7 +1024,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   headline: () => Promise<String>;
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
-  emailVerified: () => Promise<Boolean>;
+  active: () => Promise<Boolean>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -1050,7 +1051,7 @@ export interface UserSubscription
   headline: () => Promise<AsyncIterator<String>>;
   skills: () => Promise<AsyncIterator<String[]>>;
   about: () => Promise<AsyncIterator<String>>;
-  emailVerified: () => Promise<AsyncIterator<Boolean>>;
+  active: () => Promise<AsyncIterator<Boolean>>;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -1077,7 +1078,7 @@ export interface UserNullablePromise
   headline: () => Promise<String>;
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
-  emailVerified: () => Promise<Boolean>;
+  active: () => Promise<Boolean>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -1114,27 +1115,29 @@ export interface EmailVerificationHashConnectionSubscription
   aggregate: <T = AggregateEmailVerificationHashSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface PostSubscriptionPayload {
@@ -1162,47 +1165,27 @@ export interface PostSubscriptionPayloadSubscription
   previousValues: <T = PostPreviousValuesSubscription>() => T;
 }
 
-export interface PostPreviousValues {
-  id: ID_Output;
-  title: String;
-  category: String;
-  location: String;
-  offer: Int;
-  currency: String;
-  description: String;
-  skillsRequired: String[];
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  category: () => Promise<String>;
-  location: () => Promise<String>;
-  offer: () => Promise<Int>;
-  currency: () => Promise<String>;
-  description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
-  location: () => Promise<AsyncIterator<String>>;
-  offer: () => Promise<AsyncIterator<Int>>;
-  currency: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  skillsRequired: () => Promise<AsyncIterator<String[]>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface Post {
@@ -1313,29 +1296,30 @@ export interface AggregateEmailVerificationHashSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface EmailVerificationHash {
+  id: ID_Output;
+  hash: String;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface EmailVerificationHashPromise
+  extends Promise<EmailVerificationHash>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  id: () => Promise<ID_Output>;
+  hash: () => Promise<String>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface EmailVerificationHashSubscription
+  extends Promise<AsyncIterator<EmailVerificationHash>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  hash: () => Promise<AsyncIterator<String>>;
+}
+
+export interface EmailVerificationHashNullablePromise
+  extends Promise<EmailVerificationHash | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  hash: () => Promise<String>;
 }
 
 export interface PostEdge {
@@ -1399,30 +1383,47 @@ export interface EmailVerificationHashSubscriptionPayloadSubscription
   previousValues: <T = EmailVerificationHashPreviousValuesSubscription>() => T;
 }
 
-export interface EmailVerificationHash {
+export interface PostPreviousValues {
   id: ID_Output;
-  hash: String;
+  title: String;
+  category: String;
+  location: String;
+  offer: Int;
+  currency: String;
+  description: String;
+  skillsRequired: String[];
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
-export interface EmailVerificationHashPromise
-  extends Promise<EmailVerificationHash>,
+export interface PostPreviousValuesPromise
+  extends Promise<PostPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  hash: () => Promise<String>;
+  title: () => Promise<String>;
+  category: () => Promise<String>;
+  location: () => Promise<String>;
+  offer: () => Promise<Int>;
+  currency: () => Promise<String>;
+  description: () => Promise<String>;
+  skillsRequired: () => Promise<String[]>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface EmailVerificationHashSubscription
-  extends Promise<AsyncIterator<EmailVerificationHash>>,
+export interface PostPreviousValuesSubscription
+  extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  hash: () => Promise<AsyncIterator<String>>;
-}
-
-export interface EmailVerificationHashNullablePromise
-  extends Promise<EmailVerificationHash | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  hash: () => Promise<String>;
+  title: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
+  location: () => Promise<AsyncIterator<String>>;
+  offer: () => Promise<AsyncIterator<Int>>;
+  currency: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface EmailVerificationHashEdge {
@@ -1526,11 +1527,6 @@ export type Int = number;
 export type Long = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -1545,6 +1541,11 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.

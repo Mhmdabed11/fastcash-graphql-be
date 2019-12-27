@@ -28,6 +28,10 @@ type Mutation {
   ): User
 
   deleteUser(id: ID!): String
+
+  sendActivationEmail(email: String!): String
+
+  activateAccount(email: String!, hash: String!): User!
 }
 
 # Type Definitions
@@ -44,7 +48,7 @@ type User {
   posts: [Post!]!
   updatedAt: String!
   createdAt: String!
-  emailVerified: Boolean!
+  active: Boolean!
 }
 
 type AuthyPayload {

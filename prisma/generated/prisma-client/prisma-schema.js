@@ -116,6 +116,7 @@ input EmailVerificationHashWhereInput {
 
 input EmailVerificationHashWhereUniqueInput {
   id: ID
+  hash: String
 }
 
 scalar Long
@@ -603,7 +604,7 @@ type User {
   headline: String
   skills: [String!]!
   about: String
-  emailVerified: Boolean!
+  active: Boolean!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -626,7 +627,7 @@ input UserCreateInput {
   headline: String
   skills: UserCreateskillsInput
   about: String
-  emailVerified: Boolean
+  active: Boolean
   posts: PostCreateManyWithoutAuthorInput
 }
 
@@ -650,7 +651,7 @@ input UserCreateWithoutPostsInput {
   headline: String
   skills: UserCreateskillsInput
   about: String
-  emailVerified: Boolean
+  active: Boolean
 }
 
 type UserEdge {
@@ -677,8 +678,8 @@ enum UserOrderByInput {
   headline_DESC
   about_ASC
   about_DESC
-  emailVerified_ASC
-  emailVerified_DESC
+  active_ASC
+  active_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -696,7 +697,7 @@ type UserPreviousValues {
   headline: String
   skills: [String!]!
   about: String
-  emailVerified: Boolean!
+  active: Boolean!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -729,7 +730,7 @@ input UserUpdateInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
-  emailVerified: Boolean
+  active: Boolean
   posts: PostUpdateManyWithoutAuthorInput
 }
 
@@ -743,7 +744,7 @@ input UserUpdateManyMutationInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
-  emailVerified: Boolean
+  active: Boolean
 }
 
 input UserUpdateOneRequiredWithoutPostsInput {
@@ -767,7 +768,7 @@ input UserUpdateWithoutPostsDataInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
-  emailVerified: Boolean
+  active: Boolean
 }
 
 input UserUpsertWithoutPostsInput {
@@ -902,8 +903,8 @@ input UserWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
-  emailVerified: Boolean
-  emailVerified_not: Boolean
+  active: Boolean
+  active_not: Boolean
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

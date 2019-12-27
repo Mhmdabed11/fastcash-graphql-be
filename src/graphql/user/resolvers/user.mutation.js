@@ -1,44 +1,13 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APP_SECRET, getUserId } from "../../../utils";
+import { sendVerificationEmail } from "../../../helpers/sendVerificationemail";
 const {
   ForbiddenError,
   UserInputError,
   ApolloError,
   AuthenticationError
 } = require("apollo-server-core");
-const sgMail = require("@sendgrid/mail");
-const MailGen = require("mailgen");
-const SENDGRID_API_KEY =
-  "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";
-sgMail.setApiKey(SENDGRID_API_KEY);
-
-// const mailGenerator = new MailGen({
-//   theme: "salted",
-//   product: {
-//     name: "Awesome App",
-//     link: "http://example.com"
-//     // logo: your app logo url
-//   }
-// });
-
-// const email = {
-//   body: {
-//     name: "Jon Doe",
-//     intro: "Welcome to email verification",
-//     action: {
-//       instructions: "Please click the button below to verify your account",
-//       button: {
-//         color: "#33b5e5",
-//         text: "Verify account",
-//         link: "http://example.com/verify_account"
-//       }
-//     }
-//   }
-// };
-
-// const emailTemplate = mailGenerator.generate(email);
-// require("fs").writeFileSync("preview.html", emailTemplate, "utf8");
 
 const Mutation = {
   signup: async (root, args, context, info) => {
@@ -63,21 +32,14 @@ const Mutation = {
         if (err) {
           throw new ApolloError(err, 500);
         }
+        const newHash = hash.replace(/\//g, "slash");
         await context.prisma.createEmailVerificationHash({
-          hash
+          hash: newHash
         });
+        sendVerificationEmail(args.email, newHash);
       });
-
       const token = jwt.sign({ userId: newUser.id }, APP_SECRET);
 
-      // const msg = {
-      //   to: args.email,
-      //   from: "mabed4297@gmail.com",
-      //   subject: "Sending with Twilio SendGrid is Fun",
-      //   text: "and easy to do anywhere, even with Node.js",
-      //   html: emailTemplate
-      // };
-      // sgMail.send(msg);
       return {
         token,
         user: newUser
@@ -145,6 +107,67 @@ const Mutation = {
     } catch (err) {
       throw new ApolloError(err, 500);
     }
+  },
+  sendActivationEmail: async (root, args, context, info) => {
+    try {
+      const user = await context.prisma.user({ email: args.email });
+      if (!user) {
+        throw new Error("User not found", 404);
+      }
+      if (user.active === true) {
+        throw new Error(
+          "The account that belongs to this user is already active",
+          400
+        );
+      }
+      bcrypt.hash(args.email, 10, async function(err, hash) {
+        if (err) {
+          throw new ApolloError(err, 500);
+        }
+
+        const newHash = hash.replace(/\//g, "slash");
+        await context.prisma.createEmailVerificationHash({
+          hash: newHash
+        });
+        sendVerificationEmail(args.email, newHash);
+      });
+
+      return "Email Sent";
+    } catch (err) {
+      throw new ApolloError(err, 500);
+    }
+  },
+  activateAccount: async (root, args, context, info) => {
+    try {
+      console.log(args);
+      const user = await context.prisma.user({ email: args.email });
+      if (!user) {
+        throw new Error("User not found", 404);
+      }
+      const hashObject = await context.prisma.emailVerificationHash({
+        hash: args.hash
+      });
+      if (hashObject) {
+        let { hash } = hashObject;
+        hash = hash.replace(/slash/g, "/");
+
+        const match = await bcrypt.compare(args.email, hash);
+        if (match) {
+          const updatedUser = await context.prisma.updateUser({
+            where: { email: args.email },
+            data: { active: true }
+          });
+          await context.prisma.deleteEmailVerificationHash({
+            id: hashObject.id
+          });
+          return updatedUser;
+        }
+      }
+      throw new Error("Couldn't activate account");
+    } catch (err) {
+      throw new ApolloError(err, 500);
+    }
   }
 };
+
 export default Mutation;
