@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APP_SECRET, getUserId } from "../../../utils";
-import { sendVerificationEmail } from "../../../helpers/sendVerificationemail";
+import { sendVerificationEmail } from "../../../helpers/sendVerificationEmail";
 const {
   ForbiddenError,
   UserInputError,
@@ -48,11 +48,18 @@ const Mutation = {
       throw new ApolloError(err, 500);
     }
   },
+
   login: async (root, args, context, info) => {
     try {
       const user = await context.prisma.user({ email: args.email });
       if (!user) {
         throw new AuthenticationError("Invalid username or password", 401);
+      }
+      if (!user.active) {
+        throw new AuthenticationError(
+          "Please activate your account before logging in",
+          401
+        );
       }
       const valid = await bcrypt.compare(args.password, user.password);
       if (!valid) {
@@ -139,7 +146,6 @@ const Mutation = {
   },
   activateAccount: async (root, args, context, info) => {
     try {
-      console.log(args);
       const user = await context.prisma.user({ email: args.email });
       if (!user) {
         throw new Error("User not found", 404);
