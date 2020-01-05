@@ -210,6 +210,8 @@ export type PostOrderByInput =
   | "currency_DESC"
   | "description_ASC"
   | "description_DESC"
+  | "type_ASC"
+  | "type_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -252,6 +254,7 @@ export interface PostCreateInput {
   currency: String;
   description: String;
   skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
+  type: String;
   author: UserCreateOneWithoutPostsInput;
 }
 
@@ -296,6 +299,7 @@ export interface PostCreateWithoutAuthorInput {
   currency: String;
   description: String;
   skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
+  type: String;
 }
 
 export interface UserCreateWithoutPostsInput {
@@ -349,6 +353,7 @@ export interface PostUpdateManyDataInput {
   currency?: Maybe<String>;
   description?: Maybe<String>;
   skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  type?: Maybe<String>;
 }
 
 export interface EmailVerificationHashCreateInput {
@@ -449,6 +454,20 @@ export interface PostWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
   author?: Maybe<UserWhereInput>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
@@ -568,6 +587,20 @@ export interface PostScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -627,6 +660,7 @@ export interface PostUpdateManyMutationInput {
   currency?: Maybe<String>;
   description?: Maybe<String>;
   skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  type?: Maybe<String>;
 }
 
 export interface PostUpdateManyWithoutAuthorInput {
@@ -756,6 +790,7 @@ export interface PostUpdateInput {
   currency?: Maybe<String>;
   description?: Maybe<String>;
   skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  type?: Maybe<String>;
   author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
 }
 
@@ -782,6 +817,7 @@ export interface PostUpdateWithoutAuthorDataInput {
   currency?: Maybe<String>;
   description?: Maybe<String>;
   skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  type?: Maybe<String>;
 }
 
 export interface UserWhereInput {
@@ -1197,6 +1233,7 @@ export interface Post {
   currency: String;
   description: String;
   skillsRequired: String[];
+  type: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1210,6 +1247,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   currency: () => Promise<String>;
   description: () => Promise<String>;
   skillsRequired: () => Promise<String[]>;
+  type: () => Promise<String>;
   author: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -1226,6 +1264,7 @@ export interface PostSubscription
   currency: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  type: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1242,6 +1281,7 @@ export interface PostNullablePromise
   currency: () => Promise<String>;
   description: () => Promise<String>;
   skillsRequired: () => Promise<String[]>;
+  type: () => Promise<String>;
   author: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -1392,6 +1432,7 @@ export interface PostPreviousValues {
   currency: String;
   description: String;
   skillsRequired: String[];
+  type: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1407,6 +1448,7 @@ export interface PostPreviousValuesPromise
   currency: () => Promise<String>;
   description: () => Promise<String>;
   skillsRequired: () => Promise<String[]>;
+  type: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -1422,6 +1464,7 @@ export interface PostPreviousValuesSubscription
   currency: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  type: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }

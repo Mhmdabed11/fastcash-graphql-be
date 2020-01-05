@@ -24,6 +24,7 @@ type Post {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  type: String!
   author: User! 
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

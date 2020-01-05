@@ -8,6 +8,7 @@ type Post {
   description: String!
   skillsRequired: [String!]!
   author: User!
+  type: String!
   updatedAt: String!
   createdAt: String!
 }
@@ -26,6 +27,7 @@ type Mutation {
     currency: String!
     description: String!
     skillsRequired: [String!]!
+    type: String!
   ): Post!
 
   updatePost(
@@ -36,6 +38,7 @@ type Mutation {
     offer: Int
     currency: String
     description: String
+    type: String
     skillsRequired: [String!]
   ): Post!
 

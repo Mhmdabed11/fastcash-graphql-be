@@ -168,6 +168,7 @@ type Post {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  type: String!
   author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -188,6 +189,7 @@ input PostCreateInput {
   currency: String!
   description: String!
   skillsRequired: PostCreateskillsRequiredInput
+  type: String!
   author: UserCreateOneWithoutPostsInput!
 }
 
@@ -209,6 +211,7 @@ input PostCreateWithoutAuthorInput {
   currency: String!
   description: String!
   skillsRequired: PostCreateskillsRequiredInput
+  type: String!
 }
 
 type PostEdge {
@@ -231,6 +234,8 @@ enum PostOrderByInput {
   currency_DESC
   description_ASC
   description_DESC
+  type_ASC
+  type_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -246,6 +251,7 @@ type PostPreviousValues {
   currency: String!
   description: String!
   skillsRequired: [String!]!
+  type: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -343,6 +349,20 @@ input PostScalarWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -390,6 +410,7 @@ input PostUpdateInput {
   currency: String
   description: String
   skillsRequired: PostUpdateskillsRequiredInput
+  type: String
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
@@ -401,6 +422,7 @@ input PostUpdateManyDataInput {
   currency: String
   description: String
   skillsRequired: PostUpdateskillsRequiredInput
+  type: String
 }
 
 input PostUpdateManyMutationInput {
@@ -411,6 +433,7 @@ input PostUpdateManyMutationInput {
   currency: String
   description: String
   skillsRequired: PostUpdateskillsRequiredInput
+  type: String
 }
 
 input PostUpdateManyWithoutAuthorInput {
@@ -442,6 +465,7 @@ input PostUpdateWithoutAuthorDataInput {
   currency: String
   description: String
   skillsRequired: PostUpdateskillsRequiredInput
+  type: String
 }
 
 input PostUpdateWithWhereUniqueWithoutAuthorInput {
@@ -548,6 +572,20 @@ input PostWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
   author: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime

@@ -3,6 +3,10 @@ const Query = {
     const { id } = args;
     const post = await context.prisma.post({ id });
     return post;
+  },
+  posts: async (root, args, context, info) => {
+    const posts = await context.prisma.posts();
+    return posts;
   }
 };
 
