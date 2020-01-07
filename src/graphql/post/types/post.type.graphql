@@ -15,7 +15,7 @@ type Post {
 
 type Query {
   post(id: ID!): Post!
-  posts: [Post!]!
+  posts(skip: Int, first: Int): [Post!]!
 }
 
 type Mutation {
