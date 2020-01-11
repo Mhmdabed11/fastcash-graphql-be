@@ -10,6 +10,8 @@ type User {
   skills:[String!]
   about: String
   active: Boolean! @default(value: false)
+  yearsOfExperience: String
+  degree: String
   posts:[Post!]! @relation(link: INLINE)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt

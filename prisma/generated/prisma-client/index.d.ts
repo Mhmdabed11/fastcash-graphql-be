@@ -238,6 +238,10 @@ export type UserOrderByInput =
   | "about_DESC"
   | "active_ASC"
   | "active_DESC"
+  | "yearsOfExperience_ASC"
+  | "yearsOfExperience_DESC"
+  | "degree_ASC"
+  | "degree_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -274,6 +278,8 @@ export interface UserUpdateInput {
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
   active?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  degree?: Maybe<String>;
   posts?: Maybe<PostUpdateManyWithoutAuthorInput>;
 }
 
@@ -288,6 +294,8 @@ export interface UserUpdateWithoutPostsDataInput {
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
   active?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  degree?: Maybe<String>;
 }
 
 export interface PostCreateWithoutAuthorInput {
@@ -314,6 +322,8 @@ export interface UserCreateWithoutPostsInput {
   skills?: Maybe<UserCreateskillsInput>;
   about?: Maybe<String>;
   active?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  degree?: Maybe<String>;
 }
 
 export interface PostCreateManyWithoutAuthorInput {
@@ -343,6 +353,8 @@ export interface UserUpdateManyMutationInput {
   skills?: Maybe<UserUpdateskillsInput>;
   about?: Maybe<String>;
   active?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  degree?: Maybe<String>;
 }
 
 export interface PostUpdateManyDataInput {
@@ -644,6 +656,8 @@ export interface UserCreateInput {
   skills?: Maybe<UserCreateskillsInput>;
   about?: Maybe<String>;
   active?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  degree?: Maybe<String>;
   posts?: Maybe<PostCreateManyWithoutAuthorInput>;
 }
 
@@ -949,6 +963,34 @@ export interface UserWhereInput {
   about_not_ends_with?: Maybe<String>;
   active?: Maybe<Boolean>;
   active_not?: Maybe<Boolean>;
+  yearsOfExperience?: Maybe<String>;
+  yearsOfExperience_not?: Maybe<String>;
+  yearsOfExperience_in?: Maybe<String[] | String>;
+  yearsOfExperience_not_in?: Maybe<String[] | String>;
+  yearsOfExperience_lt?: Maybe<String>;
+  yearsOfExperience_lte?: Maybe<String>;
+  yearsOfExperience_gt?: Maybe<String>;
+  yearsOfExperience_gte?: Maybe<String>;
+  yearsOfExperience_contains?: Maybe<String>;
+  yearsOfExperience_not_contains?: Maybe<String>;
+  yearsOfExperience_starts_with?: Maybe<String>;
+  yearsOfExperience_not_starts_with?: Maybe<String>;
+  yearsOfExperience_ends_with?: Maybe<String>;
+  yearsOfExperience_not_ends_with?: Maybe<String>;
+  degree?: Maybe<String>;
+  degree_not?: Maybe<String>;
+  degree_in?: Maybe<String[] | String>;
+  degree_not_in?: Maybe<String[] | String>;
+  degree_lt?: Maybe<String>;
+  degree_lte?: Maybe<String>;
+  degree_gt?: Maybe<String>;
+  degree_gte?: Maybe<String>;
+  degree_contains?: Maybe<String>;
+  degree_not_contains?: Maybe<String>;
+  degree_starts_with?: Maybe<String>;
+  degree_not_starts_with?: Maybe<String>;
+  degree_ends_with?: Maybe<String>;
+  degree_not_ends_with?: Maybe<String>;
   posts_every?: Maybe<PostWhereInput>;
   posts_some?: Maybe<PostWhereInput>;
   posts_none?: Maybe<PostWhereInput>;
@@ -993,6 +1035,8 @@ export interface UserPreviousValues {
   skills: String[];
   about?: String;
   active: Boolean;
+  yearsOfExperience?: String;
+  degree?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1011,6 +1055,8 @@ export interface UserPreviousValuesPromise
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
   active: () => Promise<Boolean>;
+  yearsOfExperience: () => Promise<String>;
+  degree: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
 }
@@ -1029,6 +1075,8 @@ export interface UserPreviousValuesSubscription
   skills: () => Promise<AsyncIterator<String[]>>;
   about: () => Promise<AsyncIterator<String>>;
   active: () => Promise<AsyncIterator<Boolean>>;
+  yearsOfExperience: () => Promise<AsyncIterator<String>>;
+  degree: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
@@ -1045,6 +1093,8 @@ export interface User {
   skills: String[];
   about?: String;
   active: Boolean;
+  yearsOfExperience?: String;
+  degree?: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
 }
@@ -1061,6 +1111,8 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
   active: () => Promise<Boolean>;
+  yearsOfExperience: () => Promise<String>;
+  degree: () => Promise<String>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -1088,6 +1140,8 @@ export interface UserSubscription
   skills: () => Promise<AsyncIterator<String[]>>;
   about: () => Promise<AsyncIterator<String>>;
   active: () => Promise<AsyncIterator<Boolean>>;
+  yearsOfExperience: () => Promise<AsyncIterator<String>>;
+  degree: () => Promise<AsyncIterator<String>>;
   posts: <T = Promise<AsyncIterator<PostSubscription>>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;
@@ -1115,6 +1169,8 @@ export interface UserNullablePromise
   skills: () => Promise<String[]>;
   about: () => Promise<String>;
   active: () => Promise<Boolean>;
+  yearsOfExperience: () => Promise<String>;
+  degree: () => Promise<String>;
   posts: <T = FragmentableArray<Post>>(args?: {
     where?: PostWhereInput;
     orderBy?: PostOrderByInput;

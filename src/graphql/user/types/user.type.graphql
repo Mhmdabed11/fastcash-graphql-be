@@ -23,8 +23,10 @@ type Mutation {
     country: String
     phoneNumber: String
     headline: String
-    skills: [String!]!
+    skills: [String!]
     about: String
+    yearsOfExperience: String
+    degree: String
   ): User
 
   deleteUser(id: ID!): String
@@ -49,6 +51,8 @@ type User {
   updatedAt: String!
   createdAt: String!
   active: Boolean!
+  yearsOfExperience: String
+  degree: String
 }
 
 type AuthyPayload {

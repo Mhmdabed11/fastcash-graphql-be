@@ -643,6 +643,8 @@ type User {
   skills: [String!]!
   about: String
   active: Boolean!
+  yearsOfExperience: String
+  degree: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -666,6 +668,8 @@ input UserCreateInput {
   skills: UserCreateskillsInput
   about: String
   active: Boolean
+  yearsOfExperience: String
+  degree: String
   posts: PostCreateManyWithoutAuthorInput
 }
 
@@ -690,6 +694,8 @@ input UserCreateWithoutPostsInput {
   skills: UserCreateskillsInput
   about: String
   active: Boolean
+  yearsOfExperience: String
+  degree: String
 }
 
 type UserEdge {
@@ -718,6 +724,10 @@ enum UserOrderByInput {
   about_DESC
   active_ASC
   active_DESC
+  yearsOfExperience_ASC
+  yearsOfExperience_DESC
+  degree_ASC
+  degree_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -736,6 +746,8 @@ type UserPreviousValues {
   skills: [String!]!
   about: String
   active: Boolean!
+  yearsOfExperience: String
+  degree: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -769,6 +781,8 @@ input UserUpdateInput {
   skills: UserUpdateskillsInput
   about: String
   active: Boolean
+  yearsOfExperience: String
+  degree: String
   posts: PostUpdateManyWithoutAuthorInput
 }
 
@@ -783,6 +797,8 @@ input UserUpdateManyMutationInput {
   skills: UserUpdateskillsInput
   about: String
   active: Boolean
+  yearsOfExperience: String
+  degree: String
 }
 
 input UserUpdateOneRequiredWithoutPostsInput {
@@ -807,6 +823,8 @@ input UserUpdateWithoutPostsDataInput {
   skills: UserUpdateskillsInput
   about: String
   active: Boolean
+  yearsOfExperience: String
+  degree: String
 }
 
 input UserUpsertWithoutPostsInput {
@@ -943,6 +961,34 @@ input UserWhereInput {
   about_not_ends_with: String
   active: Boolean
   active_not: Boolean
+  yearsOfExperience: String
+  yearsOfExperience_not: String
+  yearsOfExperience_in: [String!]
+  yearsOfExperience_not_in: [String!]
+  yearsOfExperience_lt: String
+  yearsOfExperience_lte: String
+  yearsOfExperience_gt: String
+  yearsOfExperience_gte: String
+  yearsOfExperience_contains: String
+  yearsOfExperience_not_contains: String
+  yearsOfExperience_starts_with: String
+  yearsOfExperience_not_starts_with: String
+  yearsOfExperience_ends_with: String
+  yearsOfExperience_not_ends_with: String
+  degree: String
+  degree_not: String
+  degree_in: [String!]
+  degree_not_in: [String!]
+  degree_lt: String
+  degree_lte: String
+  degree_gt: String
+  degree_gte: String
+  degree_contains: String
+  degree_not_contains: String
+  degree_starts_with: String
+  degree_not_starts_with: String
+  degree_ends_with: String
+  degree_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput
