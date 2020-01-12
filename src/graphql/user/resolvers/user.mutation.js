@@ -84,7 +84,10 @@ const Mutation = {
       }
       const updatedUser = await context.prisma.updateUser({
         where: { id },
-        data: args
+        data: {
+          ...args,
+          skills: { set: args.skills }
+        }
       });
       return updatedUser;
     } catch (err) {

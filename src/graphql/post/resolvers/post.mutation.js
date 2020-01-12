@@ -20,7 +20,10 @@ const Mutation = {
     delete argsWithoutId.id;
     const newPost = await context.prisma.updatePost({
       where: { id },
-      data: argsWithoutId
+      data: {
+        ...argsWithoutId,
+        skillsRequired: { set: args.skillsRequired }
+      }
     });
     return newPost;
   },
