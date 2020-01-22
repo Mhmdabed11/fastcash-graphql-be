@@ -161,13 +161,14 @@ type PageInfo {
 
 type Post {
   id: ID!
+  companyName: String!
   title: String!
   category: String!
   location: String!
-  offer: Int!
+  salary: Int!
   currency: String!
   description: String!
-  skillsRequired: [String!]!
+  skills: [String!]!
   type: String!
   author: User!
   createdAt: DateTime!
@@ -182,13 +183,14 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
+  companyName: String!
   title: String!
   category: String!
   location: String!
-  offer: Int!
+  salary: Int!
   currency: String!
   description: String!
-  skillsRequired: PostCreateskillsRequiredInput
+  skills: PostCreateskillsInput
   type: String!
   author: UserCreateOneWithoutPostsInput!
 }
@@ -198,19 +200,20 @@ input PostCreateManyWithoutAuthorInput {
   connect: [PostWhereUniqueInput!]
 }
 
-input PostCreateskillsRequiredInput {
+input PostCreateskillsInput {
   set: [String!]
 }
 
 input PostCreateWithoutAuthorInput {
   id: ID
+  companyName: String!
   title: String!
   category: String!
   location: String!
-  offer: Int!
+  salary: Int!
   currency: String!
   description: String!
-  skillsRequired: PostCreateskillsRequiredInput
+  skills: PostCreateskillsInput
   type: String!
 }
 
@@ -222,14 +225,16 @@ type PostEdge {
 enum PostOrderByInput {
   id_ASC
   id_DESC
+  companyName_ASC
+  companyName_DESC
   title_ASC
   title_DESC
   category_ASC
   category_DESC
   location_ASC
   location_DESC
-  offer_ASC
-  offer_DESC
+  salary_ASC
+  salary_DESC
   currency_ASC
   currency_DESC
   description_ASC
@@ -244,13 +249,14 @@ enum PostOrderByInput {
 
 type PostPreviousValues {
   id: ID!
+  companyName: String!
   title: String!
   category: String!
   location: String!
-  offer: Int!
+  salary: Int!
   currency: String!
   description: String!
-  skillsRequired: [String!]!
+  skills: [String!]!
   type: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -271,6 +277,20 @@ input PostScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]
@@ -313,14 +333,14 @@ input PostScalarWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
-  offer: Int
-  offer_not: Int
-  offer_in: [Int!]
-  offer_not_in: [Int!]
-  offer_lt: Int
-  offer_lte: Int
-  offer_gt: Int
-  offer_gte: Int
+  salary: Int
+  salary_not: Int
+  salary_in: [Int!]
+  salary_not_in: [Int!]
+  salary_lt: Int
+  salary_lte: Int
+  salary_gt: Int
+  salary_gte: Int
   currency: String
   currency_not: String
   currency_in: [String!]
@@ -403,36 +423,39 @@ input PostSubscriptionWhereInput {
 }
 
 input PostUpdateInput {
+  companyName: String
   title: String
   category: String
   location: String
-  offer: Int
+  salary: Int
   currency: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  skills: PostUpdateskillsInput
   type: String
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
 input PostUpdateManyDataInput {
+  companyName: String
   title: String
   category: String
   location: String
-  offer: Int
+  salary: Int
   currency: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  skills: PostUpdateskillsInput
   type: String
 }
 
 input PostUpdateManyMutationInput {
+  companyName: String
   title: String
   category: String
   location: String
-  offer: Int
+  salary: Int
   currency: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  skills: PostUpdateskillsInput
   type: String
 }
 
@@ -453,18 +476,19 @@ input PostUpdateManyWithWhereNestedInput {
   data: PostUpdateManyDataInput!
 }
 
-input PostUpdateskillsRequiredInput {
+input PostUpdateskillsInput {
   set: [String!]
 }
 
 input PostUpdateWithoutAuthorDataInput {
+  companyName: String
   title: String
   category: String
   location: String
-  offer: Int
+  salary: Int
   currency: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  skills: PostUpdateskillsInput
   type: String
 }
 
@@ -494,6 +518,20 @@ input PostWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]
@@ -536,14 +574,14 @@ input PostWhereInput {
   location_not_starts_with: String
   location_ends_with: String
   location_not_ends_with: String
-  offer: Int
-  offer_not: Int
-  offer_in: [Int!]
-  offer_not_in: [Int!]
-  offer_lt: Int
-  offer_lte: Int
-  offer_gt: Int
-  offer_gte: Int
+  salary: Int
+  salary_not: Int
+  salary_in: [Int!]
+  salary_not_in: [Int!]
+  salary_lt: Int
+  salary_lte: Int
+  salary_gt: Int
+  salary_gte: Int
   currency: String
   currency_not: String
   currency_in: [String!]

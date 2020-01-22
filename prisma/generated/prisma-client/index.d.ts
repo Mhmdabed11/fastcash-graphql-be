@@ -198,14 +198,16 @@ export type EmailVerificationHashOrderByInput =
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "companyName_ASC"
+  | "companyName_DESC"
   | "title_ASC"
   | "title_DESC"
   | "category_ASC"
   | "category_DESC"
   | "location_ASC"
   | "location_DESC"
-  | "offer_ASC"
-  | "offer_DESC"
+  | "salary_ASC"
+  | "salary_DESC"
   | "currency_ASC"
   | "currency_DESC"
   | "description_ASC"
@@ -251,13 +253,14 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
+  companyName: String;
   title: String;
   category: String;
   location: String;
-  offer: Int;
+  salary: Int;
   currency: String;
   description: String;
-  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
+  skills?: Maybe<PostCreateskillsInput>;
   type: String;
   author: UserCreateOneWithoutPostsInput;
 }
@@ -300,13 +303,14 @@ export interface UserUpdateWithoutPostsDataInput {
 
 export interface PostCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
+  companyName: String;
   title: String;
   category: String;
   location: String;
-  offer: Int;
+  salary: Int;
   currency: String;
   description: String;
-  skillsRequired?: Maybe<PostCreateskillsRequiredInput>;
+  skills?: Maybe<PostCreateskillsInput>;
   type: String;
 }
 
@@ -358,13 +362,14 @@ export interface UserUpdateManyMutationInput {
 }
 
 export interface PostUpdateManyDataInput {
+  companyName?: Maybe<String>;
   title?: Maybe<String>;
   category?: Maybe<String>;
   location?: Maybe<String>;
-  offer?: Maybe<Int>;
+  salary?: Maybe<Int>;
   currency?: Maybe<String>;
   description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
 
@@ -388,6 +393,20 @@ export interface PostWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  companyName?: Maybe<String>;
+  companyName_not?: Maybe<String>;
+  companyName_in?: Maybe<String[] | String>;
+  companyName_not_in?: Maybe<String[] | String>;
+  companyName_lt?: Maybe<String>;
+  companyName_lte?: Maybe<String>;
+  companyName_gt?: Maybe<String>;
+  companyName_gte?: Maybe<String>;
+  companyName_contains?: Maybe<String>;
+  companyName_not_contains?: Maybe<String>;
+  companyName_starts_with?: Maybe<String>;
+  companyName_not_starts_with?: Maybe<String>;
+  companyName_ends_with?: Maybe<String>;
+  companyName_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -430,14 +449,14 @@ export interface PostWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
-  offer?: Maybe<Int>;
-  offer_not?: Maybe<Int>;
-  offer_in?: Maybe<Int[] | Int>;
-  offer_not_in?: Maybe<Int[] | Int>;
-  offer_lt?: Maybe<Int>;
-  offer_lte?: Maybe<Int>;
-  offer_gt?: Maybe<Int>;
-  offer_gte?: Maybe<Int>;
+  salary?: Maybe<Int>;
+  salary_not?: Maybe<Int>;
+  salary_in?: Maybe<Int[] | Int>;
+  salary_not_in?: Maybe<Int[] | Int>;
+  salary_lt?: Maybe<Int>;
+  salary_lte?: Maybe<Int>;
+  salary_gt?: Maybe<Int>;
+  salary_gte?: Maybe<Int>;
   currency?: Maybe<String>;
   currency_not?: Maybe<String>;
   currency_in?: Maybe<String[] | String>;
@@ -521,6 +540,20 @@ export interface PostScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  companyName?: Maybe<String>;
+  companyName_not?: Maybe<String>;
+  companyName_in?: Maybe<String[] | String>;
+  companyName_not_in?: Maybe<String[] | String>;
+  companyName_lt?: Maybe<String>;
+  companyName_lte?: Maybe<String>;
+  companyName_gt?: Maybe<String>;
+  companyName_gte?: Maybe<String>;
+  companyName_contains?: Maybe<String>;
+  companyName_not_contains?: Maybe<String>;
+  companyName_starts_with?: Maybe<String>;
+  companyName_not_starts_with?: Maybe<String>;
+  companyName_ends_with?: Maybe<String>;
+  companyName_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -563,14 +596,14 @@ export interface PostScalarWhereInput {
   location_not_starts_with?: Maybe<String>;
   location_ends_with?: Maybe<String>;
   location_not_ends_with?: Maybe<String>;
-  offer?: Maybe<Int>;
-  offer_not?: Maybe<Int>;
-  offer_in?: Maybe<Int[] | Int>;
-  offer_not_in?: Maybe<Int[] | Int>;
-  offer_lt?: Maybe<Int>;
-  offer_lte?: Maybe<Int>;
-  offer_gt?: Maybe<Int>;
-  offer_gte?: Maybe<Int>;
+  salary?: Maybe<Int>;
+  salary_not?: Maybe<Int>;
+  salary_in?: Maybe<Int[] | Int>;
+  salary_not_in?: Maybe<Int[] | Int>;
+  salary_lt?: Maybe<Int>;
+  salary_lte?: Maybe<Int>;
+  salary_gt?: Maybe<Int>;
+  salary_gte?: Maybe<Int>;
   currency?: Maybe<String>;
   currency_not?: Maybe<String>;
   currency_in?: Maybe<String[] | String>;
@@ -667,13 +700,14 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
 }
 
 export interface PostUpdateManyMutationInput {
+  companyName?: Maybe<String>;
   title?: Maybe<String>;
   category?: Maybe<String>;
   location?: Maybe<String>;
-  offer?: Maybe<Int>;
+  salary?: Maybe<Int>;
   currency?: Maybe<String>;
   description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
 
@@ -722,7 +756,7 @@ export interface EmailVerificationHashSubscriptionWhereInput {
   >;
 }
 
-export interface PostCreateskillsRequiredInput {
+export interface PostCreateskillsInput {
   set?: Maybe<String[] | String>;
 }
 
@@ -792,18 +826,19 @@ export interface UserUpdateOneRequiredWithoutPostsInput {
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface PostUpdateskillsRequiredInput {
+export interface PostUpdateskillsInput {
   set?: Maybe<String[] | String>;
 }
 
 export interface PostUpdateInput {
+  companyName?: Maybe<String>;
   title?: Maybe<String>;
   category?: Maybe<String>;
   location?: Maybe<String>;
-  offer?: Maybe<Int>;
+  salary?: Maybe<Int>;
   currency?: Maybe<String>;
   description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
   author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
 }
@@ -824,13 +859,14 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface PostUpdateWithoutAuthorDataInput {
+  companyName?: Maybe<String>;
   title?: Maybe<String>;
   category?: Maybe<String>;
   location?: Maybe<String>;
-  offer?: Maybe<Int>;
+  salary?: Maybe<Int>;
   currency?: Maybe<String>;
   description?: Maybe<String>;
-  skillsRequired?: Maybe<PostUpdateskillsRequiredInput>;
+  skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
 
@@ -1282,13 +1318,14 @@ export interface PageInfoSubscription
 
 export interface Post {
   id: ID_Output;
+  companyName: String;
   title: String;
   category: String;
   location: String;
-  offer: Int;
+  salary: Int;
   currency: String;
   description: String;
-  skillsRequired: String[];
+  skills: String[];
   type: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -1296,13 +1333,14 @@ export interface Post {
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
+  companyName: () => Promise<String>;
   title: () => Promise<String>;
   category: () => Promise<String>;
   location: () => Promise<String>;
-  offer: () => Promise<Int>;
+  salary: () => Promise<Int>;
   currency: () => Promise<String>;
   description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
+  skills: () => Promise<String[]>;
   type: () => Promise<String>;
   author: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1313,13 +1351,14 @@ export interface PostSubscription
   extends Promise<AsyncIterator<Post>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  companyName: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
   category: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
-  offer: () => Promise<AsyncIterator<Int>>;
+  salary: () => Promise<AsyncIterator<Int>>;
   currency: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  skills: () => Promise<AsyncIterator<String[]>>;
   type: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -1330,13 +1369,14 @@ export interface PostNullablePromise
   extends Promise<Post | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  companyName: () => Promise<String>;
   title: () => Promise<String>;
   category: () => Promise<String>;
   location: () => Promise<String>;
-  offer: () => Promise<Int>;
+  salary: () => Promise<Int>;
   currency: () => Promise<String>;
   description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
+  skills: () => Promise<String[]>;
   type: () => Promise<String>;
   author: <T = UserPromise>() => T;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1481,13 +1521,14 @@ export interface EmailVerificationHashSubscriptionPayloadSubscription
 
 export interface PostPreviousValues {
   id: ID_Output;
+  companyName: String;
   title: String;
   category: String;
   location: String;
-  offer: Int;
+  salary: Int;
   currency: String;
   description: String;
-  skillsRequired: String[];
+  skills: String[];
   type: String;
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
@@ -1497,13 +1538,14 @@ export interface PostPreviousValuesPromise
   extends Promise<PostPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  companyName: () => Promise<String>;
   title: () => Promise<String>;
   category: () => Promise<String>;
   location: () => Promise<String>;
-  offer: () => Promise<Int>;
+  salary: () => Promise<Int>;
   currency: () => Promise<String>;
   description: () => Promise<String>;
-  skillsRequired: () => Promise<String[]>;
+  skills: () => Promise<String[]>;
   type: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
@@ -1513,13 +1555,14 @@ export interface PostPreviousValuesSubscription
   extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  companyName: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
   category: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
-  offer: () => Promise<AsyncIterator<Int>>;
+  salary: () => Promise<AsyncIterator<Int>>;
   currency: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
-  skillsRequired: () => Promise<AsyncIterator<String[]>>;
+  skills: () => Promise<AsyncIterator<String[]>>;
   type: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;

@@ -5,7 +5,7 @@ const Mutation = {
     const userId = getUserId(context);
     const post = await context.prisma.createPost({
       ...args,
-      skillsRequired: { set: args.skillsRequired },
+      skills: { set: args.skills },
       author: { connect: { id: userId } }
     });
     return post;
@@ -22,7 +22,7 @@ const Mutation = {
       where: { id },
       data: {
         ...argsWithoutId,
-        skillsRequired: { set: args.skillsRequired }
+        skills: { set: args.skills }
       }
     });
     return newPost;
