@@ -7,7 +7,8 @@ const Query = {
   posts: async (root, args, context, info) => {
     const posts = await context.prisma.posts({
       skip: args.skip,
-      first: args.first
+      first: args.first,
+      last: args.last
     });
     return posts;
   }
