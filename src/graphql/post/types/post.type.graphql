@@ -16,7 +16,14 @@ type Post {
 
 type Query {
   post(id: ID!): Post!
-  posts(skip: Int, first: Int, last: Int): [Post!]!
+  posts(
+    skip: Int
+    first: Int
+    last: Int
+    filter: String
+    location: String
+    category: String
+  ): [Post!]!
 }
 
 type Mutation {
