@@ -161,13 +161,13 @@ type PageInfo {
 
 type Post {
   id: ID!
-  companyName: String!
   title: String!
-  category: String!
+  companyName: String!
+  description: String!
   location: String!
   salary: Int!
   currency: String!
-  description: String!
+  category: String!
   skills: [String!]!
   type: String!
   author: User!
@@ -183,13 +183,13 @@ type PostConnection {
 
 input PostCreateInput {
   id: ID
-  companyName: String!
   title: String!
-  category: String!
+  companyName: String!
+  description: String!
   location: String!
   salary: Int!
   currency: String!
-  description: String!
+  category: String!
   skills: PostCreateskillsInput
   type: String!
   author: UserCreateOneWithoutPostsInput!
@@ -206,13 +206,13 @@ input PostCreateskillsInput {
 
 input PostCreateWithoutAuthorInput {
   id: ID
-  companyName: String!
   title: String!
-  category: String!
+  companyName: String!
+  description: String!
   location: String!
   salary: Int!
   currency: String!
-  description: String!
+  category: String!
   skills: PostCreateskillsInput
   type: String!
 }
@@ -225,20 +225,20 @@ type PostEdge {
 enum PostOrderByInput {
   id_ASC
   id_DESC
-  companyName_ASC
-  companyName_DESC
   title_ASC
   title_DESC
-  category_ASC
-  category_DESC
+  companyName_ASC
+  companyName_DESC
+  description_ASC
+  description_DESC
   location_ASC
   location_DESC
   salary_ASC
   salary_DESC
   currency_ASC
   currency_DESC
-  description_ASC
-  description_DESC
+  category_ASC
+  category_DESC
   type_ASC
   type_DESC
   createdAt_ASC
@@ -249,13 +249,13 @@ enum PostOrderByInput {
 
 type PostPreviousValues {
   id: ID!
-  companyName: String!
   title: String!
-  category: String!
+  companyName: String!
+  description: String!
   location: String!
   salary: Int!
   currency: String!
-  description: String!
+  category: String!
   skills: [String!]!
   type: String!
   createdAt: DateTime!
@@ -277,20 +277,6 @@ input PostScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  companyName: String
-  companyName_not: String
-  companyName_in: [String!]
-  companyName_not_in: [String!]
-  companyName_lt: String
-  companyName_lte: String
-  companyName_gt: String
-  companyName_gte: String
-  companyName_contains: String
-  companyName_not_contains: String
-  companyName_starts_with: String
-  companyName_not_starts_with: String
-  companyName_ends_with: String
-  companyName_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]
@@ -305,20 +291,34 @@ input PostScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -355,20 +355,20 @@ input PostScalarWhereInput {
   currency_not_starts_with: String
   currency_ends_with: String
   currency_not_ends_with: String
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
   type: String
   type_not: String
   type_in: [String!]
@@ -423,38 +423,38 @@ input PostSubscriptionWhereInput {
 }
 
 input PostUpdateInput {
-  companyName: String
   title: String
-  category: String
+  companyName: String
+  description: String
   location: String
   salary: Int
   currency: String
-  description: String
+  category: String
   skills: PostUpdateskillsInput
   type: String
   author: UserUpdateOneRequiredWithoutPostsInput
 }
 
 input PostUpdateManyDataInput {
-  companyName: String
   title: String
-  category: String
+  companyName: String
+  description: String
   location: String
   salary: Int
   currency: String
-  description: String
+  category: String
   skills: PostUpdateskillsInput
   type: String
 }
 
 input PostUpdateManyMutationInput {
-  companyName: String
   title: String
-  category: String
+  companyName: String
+  description: String
   location: String
   salary: Int
   currency: String
-  description: String
+  category: String
   skills: PostUpdateskillsInput
   type: String
 }
@@ -481,13 +481,13 @@ input PostUpdateskillsInput {
 }
 
 input PostUpdateWithoutAuthorDataInput {
-  companyName: String
   title: String
-  category: String
+  companyName: String
+  description: String
   location: String
   salary: Int
   currency: String
-  description: String
+  category: String
   skills: PostUpdateskillsInput
   type: String
 }
@@ -518,20 +518,6 @@ input PostWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  companyName: String
-  companyName_not: String
-  companyName_in: [String!]
-  companyName_not_in: [String!]
-  companyName_lt: String
-  companyName_lte: String
-  companyName_gt: String
-  companyName_gte: String
-  companyName_contains: String
-  companyName_not_contains: String
-  companyName_starts_with: String
-  companyName_not_starts_with: String
-  companyName_ends_with: String
-  companyName_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]
@@ -546,20 +532,34 @@ input PostWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
   location: String
   location_not: String
   location_in: [String!]
@@ -596,20 +596,20 @@ input PostWhereInput {
   currency_not_starts_with: String
   currency_ends_with: String
   currency_not_ends_with: String
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
   type: String
   type_not: String
   type_in: [String!]
