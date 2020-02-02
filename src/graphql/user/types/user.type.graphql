@@ -1,5 +1,3 @@
-#import Post from '../../post/types/post.type.graphql'
-
 type Query {
   user(id: ID!): User
   users: [User!]!
@@ -13,6 +11,7 @@ type Mutation {
     email: String!
     country: String!
     password: String!
+    confirmPassword: String!
   ): AuthyPayload
 
   login(email: String!, password: String!): AuthyPayload
@@ -24,11 +23,17 @@ type Mutation {
     country: String
     phoneNumber: String
     headline: String
-    skill: String
+    skills: [String!]
     about: String
+    yearsOfExperience: String
+    degree: String
   ): User
 
   deleteUser(id: ID!): String
+
+  sendActivationEmail(email: String!): String
+
+  activateAccount(email: String!, hash: String!): User!
 }
 
 # Type Definitions
@@ -43,6 +48,11 @@ type User {
   skills: [String!]
   about: String
   posts: [Post!]!
+  updatedAt: String!
+  createdAt: String!
+  active: Boolean!
+  yearsOfExperience: String
+  degree: String
 }
 
 type AuthyPayload {

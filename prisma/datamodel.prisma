@@ -9,15 +9,31 @@ type User {
   headline: String
   skills:[String!]
   about: String
+  active: Boolean! @default(value: false)
+  yearsOfExperience: String
+  degree: String
+  posts:[Post!]! @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Post {
   id: ID! @id
   title: String!
-  category: String!
-  location: String!
-  offer: Int!
-  currency: String!
+  companyName: String!
   description: String!
-  skillsRequired: [String!]!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: [String!]!
+  type: String!
+  author: User! 
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type EmailVerificationHash {
+  id: ID! @id
+  hash: String! @unique
 }
