@@ -5,8 +5,8 @@ export const sendVerificationEmail = (to, hash) => {
   const mailGenerator = new MailGen({
     theme: "salted",
     product: {
-      name: "Awesome App",
-      link: "http://example.com"
+      name: "FastCash",
+      link: "http://35.180.127.229:3000"
       // logo: your app logo url
     }
   });
@@ -20,7 +20,7 @@ export const sendVerificationEmail = (to, hash) => {
         button: {
           color: "#33b5e5",
           text: "Verify account",
-          link: `http://localhost:3000/verify/${to}/${hash}`
+          link: `http://35.180.127.229:3000/verify/${to}/${hash}`
         }
       }
     }
