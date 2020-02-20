@@ -198,20 +198,20 @@ export type EmailVerificationHashOrderByInput =
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "companyName_ASC"
-  | "companyName_DESC"
   | "title_ASC"
   | "title_DESC"
-  | "category_ASC"
-  | "category_DESC"
+  | "companyName_ASC"
+  | "companyName_DESC"
+  | "description_ASC"
+  | "description_DESC"
   | "location_ASC"
   | "location_DESC"
   | "salary_ASC"
   | "salary_DESC"
   | "currency_ASC"
   | "currency_DESC"
-  | "description_ASC"
-  | "description_DESC"
+  | "category_ASC"
+  | "category_DESC"
   | "type_ASC"
   | "type_DESC"
   | "createdAt_ASC"
@@ -253,13 +253,13 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface PostCreateInput {
   id?: Maybe<ID_Input>;
-  companyName: String;
   title: String;
-  category: String;
+  companyName: String;
+  description: String;
   location: String;
   salary: Int;
   currency: String;
-  description: String;
+  category: String;
   skills?: Maybe<PostCreateskillsInput>;
   type: String;
   author: UserCreateOneWithoutPostsInput;
@@ -303,13 +303,13 @@ export interface UserUpdateWithoutPostsDataInput {
 
 export interface PostCreateWithoutAuthorInput {
   id?: Maybe<ID_Input>;
-  companyName: String;
   title: String;
-  category: String;
+  companyName: String;
+  description: String;
   location: String;
   salary: Int;
   currency: String;
-  description: String;
+  category: String;
   skills?: Maybe<PostCreateskillsInput>;
   type: String;
 }
@@ -362,13 +362,13 @@ export interface UserUpdateManyMutationInput {
 }
 
 export interface PostUpdateManyDataInput {
-  companyName?: Maybe<String>;
   title?: Maybe<String>;
-  category?: Maybe<String>;
+  companyName?: Maybe<String>;
+  description?: Maybe<String>;
   location?: Maybe<String>;
   salary?: Maybe<Int>;
   currency?: Maybe<String>;
-  description?: Maybe<String>;
+  category?: Maybe<String>;
   skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
@@ -393,20 +393,6 @@ export interface PostWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  companyName?: Maybe<String>;
-  companyName_not?: Maybe<String>;
-  companyName_in?: Maybe<String[] | String>;
-  companyName_not_in?: Maybe<String[] | String>;
-  companyName_lt?: Maybe<String>;
-  companyName_lte?: Maybe<String>;
-  companyName_gt?: Maybe<String>;
-  companyName_gte?: Maybe<String>;
-  companyName_contains?: Maybe<String>;
-  companyName_not_contains?: Maybe<String>;
-  companyName_starts_with?: Maybe<String>;
-  companyName_not_starts_with?: Maybe<String>;
-  companyName_ends_with?: Maybe<String>;
-  companyName_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -421,20 +407,34 @@ export interface PostWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
-  category?: Maybe<String>;
-  category_not?: Maybe<String>;
-  category_in?: Maybe<String[] | String>;
-  category_not_in?: Maybe<String[] | String>;
-  category_lt?: Maybe<String>;
-  category_lte?: Maybe<String>;
-  category_gt?: Maybe<String>;
-  category_gte?: Maybe<String>;
-  category_contains?: Maybe<String>;
-  category_not_contains?: Maybe<String>;
-  category_starts_with?: Maybe<String>;
-  category_not_starts_with?: Maybe<String>;
-  category_ends_with?: Maybe<String>;
-  category_not_ends_with?: Maybe<String>;
+  companyName?: Maybe<String>;
+  companyName_not?: Maybe<String>;
+  companyName_in?: Maybe<String[] | String>;
+  companyName_not_in?: Maybe<String[] | String>;
+  companyName_lt?: Maybe<String>;
+  companyName_lte?: Maybe<String>;
+  companyName_gt?: Maybe<String>;
+  companyName_gte?: Maybe<String>;
+  companyName_contains?: Maybe<String>;
+  companyName_not_contains?: Maybe<String>;
+  companyName_starts_with?: Maybe<String>;
+  companyName_not_starts_with?: Maybe<String>;
+  companyName_ends_with?: Maybe<String>;
+  companyName_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   location?: Maybe<String>;
   location_not?: Maybe<String>;
   location_in?: Maybe<String[] | String>;
@@ -471,20 +471,20 @@ export interface PostWhereInput {
   currency_not_starts_with?: Maybe<String>;
   currency_ends_with?: Maybe<String>;
   currency_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
   type?: Maybe<String>;
   type_not?: Maybe<String>;
   type_in?: Maybe<String[] | String>;
@@ -540,20 +540,6 @@ export interface PostScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  companyName?: Maybe<String>;
-  companyName_not?: Maybe<String>;
-  companyName_in?: Maybe<String[] | String>;
-  companyName_not_in?: Maybe<String[] | String>;
-  companyName_lt?: Maybe<String>;
-  companyName_lte?: Maybe<String>;
-  companyName_gt?: Maybe<String>;
-  companyName_gte?: Maybe<String>;
-  companyName_contains?: Maybe<String>;
-  companyName_not_contains?: Maybe<String>;
-  companyName_starts_with?: Maybe<String>;
-  companyName_not_starts_with?: Maybe<String>;
-  companyName_ends_with?: Maybe<String>;
-  companyName_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -568,20 +554,34 @@ export interface PostScalarWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
-  category?: Maybe<String>;
-  category_not?: Maybe<String>;
-  category_in?: Maybe<String[] | String>;
-  category_not_in?: Maybe<String[] | String>;
-  category_lt?: Maybe<String>;
-  category_lte?: Maybe<String>;
-  category_gt?: Maybe<String>;
-  category_gte?: Maybe<String>;
-  category_contains?: Maybe<String>;
-  category_not_contains?: Maybe<String>;
-  category_starts_with?: Maybe<String>;
-  category_not_starts_with?: Maybe<String>;
-  category_ends_with?: Maybe<String>;
-  category_not_ends_with?: Maybe<String>;
+  companyName?: Maybe<String>;
+  companyName_not?: Maybe<String>;
+  companyName_in?: Maybe<String[] | String>;
+  companyName_not_in?: Maybe<String[] | String>;
+  companyName_lt?: Maybe<String>;
+  companyName_lte?: Maybe<String>;
+  companyName_gt?: Maybe<String>;
+  companyName_gte?: Maybe<String>;
+  companyName_contains?: Maybe<String>;
+  companyName_not_contains?: Maybe<String>;
+  companyName_starts_with?: Maybe<String>;
+  companyName_not_starts_with?: Maybe<String>;
+  companyName_ends_with?: Maybe<String>;
+  companyName_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
   location?: Maybe<String>;
   location_not?: Maybe<String>;
   location_in?: Maybe<String[] | String>;
@@ -618,20 +618,20 @@ export interface PostScalarWhereInput {
   currency_not_starts_with?: Maybe<String>;
   currency_ends_with?: Maybe<String>;
   currency_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
   type?: Maybe<String>;
   type_not?: Maybe<String>;
   type_in?: Maybe<String[] | String>;
@@ -700,13 +700,13 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
 }
 
 export interface PostUpdateManyMutationInput {
-  companyName?: Maybe<String>;
   title?: Maybe<String>;
-  category?: Maybe<String>;
+  companyName?: Maybe<String>;
+  description?: Maybe<String>;
   location?: Maybe<String>;
   salary?: Maybe<Int>;
   currency?: Maybe<String>;
-  description?: Maybe<String>;
+  category?: Maybe<String>;
   skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
@@ -831,13 +831,13 @@ export interface PostUpdateskillsInput {
 }
 
 export interface PostUpdateInput {
-  companyName?: Maybe<String>;
   title?: Maybe<String>;
-  category?: Maybe<String>;
+  companyName?: Maybe<String>;
+  description?: Maybe<String>;
   location?: Maybe<String>;
   salary?: Maybe<Int>;
   currency?: Maybe<String>;
-  description?: Maybe<String>;
+  category?: Maybe<String>;
   skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
   author?: Maybe<UserUpdateOneRequiredWithoutPostsInput>;
@@ -859,13 +859,13 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface PostUpdateWithoutAuthorDataInput {
-  companyName?: Maybe<String>;
   title?: Maybe<String>;
-  category?: Maybe<String>;
+  companyName?: Maybe<String>;
+  description?: Maybe<String>;
   location?: Maybe<String>;
   salary?: Maybe<Int>;
   currency?: Maybe<String>;
-  description?: Maybe<String>;
+  category?: Maybe<String>;
   skills?: Maybe<PostUpdateskillsInput>;
   type?: Maybe<String>;
 }
@@ -1318,13 +1318,13 @@ export interface PageInfoSubscription
 
 export interface Post {
   id: ID_Output;
-  companyName: String;
   title: String;
-  category: String;
+  companyName: String;
+  description: String;
   location: String;
   salary: Int;
   currency: String;
-  description: String;
+  category: String;
   skills: String[];
   type: String;
   createdAt: DateTimeOutput;
@@ -1333,13 +1333,13 @@ export interface Post {
 
 export interface PostPromise extends Promise<Post>, Fragmentable {
   id: () => Promise<ID_Output>;
-  companyName: () => Promise<String>;
   title: () => Promise<String>;
-  category: () => Promise<String>;
+  companyName: () => Promise<String>;
+  description: () => Promise<String>;
   location: () => Promise<String>;
   salary: () => Promise<Int>;
   currency: () => Promise<String>;
-  description: () => Promise<String>;
+  category: () => Promise<String>;
   skills: () => Promise<String[]>;
   type: () => Promise<String>;
   author: <T = UserPromise>() => T;
@@ -1351,13 +1351,13 @@ export interface PostSubscription
   extends Promise<AsyncIterator<Post>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  companyName: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
+  companyName: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
   salary: () => Promise<AsyncIterator<Int>>;
   currency: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
   skills: () => Promise<AsyncIterator<String[]>>;
   type: () => Promise<AsyncIterator<String>>;
   author: <T = UserSubscription>() => T;
@@ -1369,13 +1369,13 @@ export interface PostNullablePromise
   extends Promise<Post | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  companyName: () => Promise<String>;
   title: () => Promise<String>;
-  category: () => Promise<String>;
+  companyName: () => Promise<String>;
+  description: () => Promise<String>;
   location: () => Promise<String>;
   salary: () => Promise<Int>;
   currency: () => Promise<String>;
-  description: () => Promise<String>;
+  category: () => Promise<String>;
   skills: () => Promise<String[]>;
   type: () => Promise<String>;
   author: <T = UserPromise>() => T;
@@ -1521,13 +1521,13 @@ export interface EmailVerificationHashSubscriptionPayloadSubscription
 
 export interface PostPreviousValues {
   id: ID_Output;
-  companyName: String;
   title: String;
-  category: String;
+  companyName: String;
+  description: String;
   location: String;
   salary: Int;
   currency: String;
-  description: String;
+  category: String;
   skills: String[];
   type: String;
   createdAt: DateTimeOutput;
@@ -1538,13 +1538,13 @@ export interface PostPreviousValuesPromise
   extends Promise<PostPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  companyName: () => Promise<String>;
   title: () => Promise<String>;
-  category: () => Promise<String>;
+  companyName: () => Promise<String>;
+  description: () => Promise<String>;
   location: () => Promise<String>;
   salary: () => Promise<Int>;
   currency: () => Promise<String>;
-  description: () => Promise<String>;
+  category: () => Promise<String>;
   skills: () => Promise<String[]>;
   type: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
@@ -1555,13 +1555,13 @@ export interface PostPreviousValuesSubscription
   extends Promise<AsyncIterator<PostPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  companyName: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
-  category: () => Promise<AsyncIterator<String>>;
+  companyName: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
   location: () => Promise<AsyncIterator<String>>;
   salary: () => Promise<AsyncIterator<Int>>;
   currency: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
+  category: () => Promise<AsyncIterator<String>>;
   skills: () => Promise<AsyncIterator<String[]>>;
   type: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
