@@ -1,0 +1,39 @@
+type User {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  password: String!
+  country: String
+  phoneNumber: String
+  headline: String
+  skills:[String!]
+  about: String
+  active: Boolean! @default(value: false)
+  yearsOfExperience: String
+  degree: String
+  posts:[Post!]! @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Post {
+  id: ID! @id
+  title: String!
+  companyName: String!
+  description: String!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: [String!]!
+  type: String!
+  author: User! 
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type EmailVerificationHash {
+  id: ID! @id
+  hash: String! @unique
+}

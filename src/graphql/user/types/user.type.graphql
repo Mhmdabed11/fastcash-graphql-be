@@ -1,0 +1,61 @@
+type Query {
+  user(id: ID!): User
+  users: [User!]!
+}
+
+# Mutations
+type Mutation {
+  signup(
+    firstName: String!
+    lastName: String!
+    email: String!
+    country: String!
+    password: String!
+    confirmPassword: String!
+  ): AuthyPayload
+
+  login(email: String!, password: String!): AuthyPayload
+
+  updateUser(
+    firstName: String
+    lastName: String
+    password: String
+    country: String
+    phoneNumber: String
+    headline: String
+    skills: [String!]
+    about: String
+    yearsOfExperience: String
+    degree: String
+  ): User
+
+  deleteUser(id: ID!): String
+
+  sendActivationEmail(email: String!): String
+
+  activateAccount(email: String!, hash: String!): User!
+}
+
+# Type Definitions
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  country: String!
+  phoneNumber: String
+  headline: String
+  skills: [String!]
+  about: String
+  posts: [Post!]!
+  updatedAt: String!
+  createdAt: String!
+  active: Boolean!
+  yearsOfExperience: String
+  degree: String
+}
+
+type AuthyPayload {
+  token: String
+  user: User
+}
