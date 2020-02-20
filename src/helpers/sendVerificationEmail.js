@@ -6,21 +6,21 @@ export const sendVerificationEmail = (to, hash) => {
     theme: "salted",
     product: {
       name: "FastCash",
-      link: "http://35.180.127.229:3000"
+      link: "http://35.180.58.9:3000"
       // logo: your app logo url
     }
   });
 
   const email = {
     body: {
-      name: "Jon Doe",
+      name: "",
       intro: "Welcome to email verification",
       action: {
         instructions: "Please click the button below to verify your account",
         button: {
           color: "#33b5e5",
           text: "Verify account",
-          link: `http://35.180.127.229:3000/verify/${to}/${hash}`
+          link: `http://35.180.58.9:3000/verify/${to}/${hash}`
         }
       }
     }
