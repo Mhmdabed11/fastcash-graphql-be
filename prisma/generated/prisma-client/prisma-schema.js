@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregatePost {
+/* GraphQL */ `type AggregateEmailVerificationHash {
+  count: Int!
+}
+
+type AggregatePost {
   count: Int!
 }
 
@@ -15,9 +19,115 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
+type EmailVerificationHash {
+  id: ID!
+  hash: String!
+}
+
+type EmailVerificationHashConnection {
+  pageInfo: PageInfo!
+  edges: [EmailVerificationHashEdge]!
+  aggregate: AggregateEmailVerificationHash!
+}
+
+input EmailVerificationHashCreateInput {
+  id: ID
+  hash: String!
+}
+
+type EmailVerificationHashEdge {
+  node: EmailVerificationHash!
+  cursor: String!
+}
+
+enum EmailVerificationHashOrderByInput {
+  id_ASC
+  id_DESC
+  hash_ASC
+  hash_DESC
+}
+
+type EmailVerificationHashPreviousValues {
+  id: ID!
+  hash: String!
+}
+
+type EmailVerificationHashSubscriptionPayload {
+  mutation: MutationType!
+  node: EmailVerificationHash
+  updatedFields: [String!]
+  previousValues: EmailVerificationHashPreviousValues
+}
+
+input EmailVerificationHashSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: EmailVerificationHashWhereInput
+  AND: [EmailVerificationHashSubscriptionWhereInput!]
+  OR: [EmailVerificationHashSubscriptionWhereInput!]
+  NOT: [EmailVerificationHashSubscriptionWhereInput!]
+}
+
+input EmailVerificationHashUpdateInput {
+  hash: String
+}
+
+input EmailVerificationHashUpdateManyMutationInput {
+  hash: String
+}
+
+input EmailVerificationHashWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  hash: String
+  hash_not: String
+  hash_in: [String!]
+  hash_not_in: [String!]
+  hash_lt: String
+  hash_lte: String
+  hash_gt: String
+  hash_gte: String
+  hash_contains: String
+  hash_not_contains: String
+  hash_starts_with: String
+  hash_not_starts_with: String
+  hash_ends_with: String
+  hash_not_ends_with: String
+  AND: [EmailVerificationHashWhereInput!]
+  OR: [EmailVerificationHashWhereInput!]
+  NOT: [EmailVerificationHashWhereInput!]
+}
+
+input EmailVerificationHashWhereUniqueInput {
+  id: ID
+  hash: String
+}
+
 scalar Long
 
 type Mutation {
+  createEmailVerificationHash(data: EmailVerificationHashCreateInput!): EmailVerificationHash!
+  updateEmailVerificationHash(data: EmailVerificationHashUpdateInput!, where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  updateManyEmailVerificationHashes(data: EmailVerificationHashUpdateManyMutationInput!, where: EmailVerificationHashWhereInput): BatchPayload!
+  upsertEmailVerificationHash(where: EmailVerificationHashWhereUniqueInput!, create: EmailVerificationHashCreateInput!, update: EmailVerificationHashUpdateInput!): EmailVerificationHash!
+  deleteEmailVerificationHash(where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  deleteManyEmailVerificationHashes(where: EmailVerificationHashWhereInput): BatchPayload!
   createPost(data: PostCreateInput!): Post!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
@@ -52,12 +162,17 @@ type PageInfo {
 type Post {
   id: ID!
   title: String!
-  category: String!
-  location: String!
-  offer: Int!
-  currency: String!
+  companyName: String!
   description: String!
-  skillsRequired: [String!]!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: [String!]!
+  type: String!
+  author: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type PostConnection {
@@ -69,16 +184,37 @@ type PostConnection {
 input PostCreateInput {
   id: ID
   title: String!
-  category: String!
-  location: String!
-  offer: Int!
-  currency: String!
+  companyName: String!
   description: String!
-  skillsRequired: PostCreateskillsRequiredInput
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: PostCreateskillsInput
+  type: String!
+  author: UserCreateOneWithoutPostsInput!
 }
 
-input PostCreateskillsRequiredInput {
+input PostCreateManyWithoutAuthorInput {
+  create: [PostCreateWithoutAuthorInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateskillsInput {
   set: [String!]
+}
+
+input PostCreateWithoutAuthorInput {
+  id: ID
+  title: String!
+  companyName: String!
+  description: String!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: PostCreateskillsInput
+  type: String!
 }
 
 type PostEdge {
@@ -91,27 +227,181 @@ enum PostOrderByInput {
   id_DESC
   title_ASC
   title_DESC
-  category_ASC
-  category_DESC
-  location_ASC
-  location_DESC
-  offer_ASC
-  offer_DESC
-  currency_ASC
-  currency_DESC
+  companyName_ASC
+  companyName_DESC
   description_ASC
   description_DESC
+  location_ASC
+  location_DESC
+  salary_ASC
+  salary_DESC
+  currency_ASC
+  currency_DESC
+  category_ASC
+  category_DESC
+  type_ASC
+  type_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type PostPreviousValues {
   id: ID!
   title: String!
-  category: String!
-  location: String!
-  offer: Int!
-  currency: String!
+  companyName: String!
   description: String!
-  skillsRequired: [String!]!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: [String!]!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input PostScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  salary: Int
+  salary_not: Int
+  salary_in: [Int!]
+  salary_not_in: [Int!]
+  salary_lt: Int
+  salary_lte: Int
+  salary_gt: Int
+  salary_gte: Int
+  currency: String
+  currency_not: String
+  currency_in: [String!]
+  currency_not_in: [String!]
+  currency_lt: String
+  currency_lte: String
+  currency_gt: String
+  currency_gte: String
+  currency_contains: String
+  currency_not_contains: String
+  currency_starts_with: String
+  currency_not_starts_with: String
+  currency_ends_with: String
+  currency_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [PostScalarWhereInput!]
+  OR: [PostScalarWhereInput!]
+  NOT: [PostScalarWhereInput!]
 }
 
 type PostSubscriptionPayload {
@@ -134,26 +424,83 @@ input PostSubscriptionWhereInput {
 
 input PostUpdateInput {
   title: String
-  category: String
-  location: String
-  offer: Int
-  currency: String
+  companyName: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  location: String
+  salary: Int
+  currency: String
+  category: String
+  skills: PostUpdateskillsInput
+  type: String
+  author: UserUpdateOneRequiredWithoutPostsInput
+}
+
+input PostUpdateManyDataInput {
+  title: String
+  companyName: String
+  description: String
+  location: String
+  salary: Int
+  currency: String
+  category: String
+  skills: PostUpdateskillsInput
+  type: String
 }
 
 input PostUpdateManyMutationInput {
   title: String
-  category: String
-  location: String
-  offer: Int
-  currency: String
+  companyName: String
   description: String
-  skillsRequired: PostUpdateskillsRequiredInput
+  location: String
+  salary: Int
+  currency: String
+  category: String
+  skills: PostUpdateskillsInput
+  type: String
 }
 
-input PostUpdateskillsRequiredInput {
+input PostUpdateManyWithoutAuthorInput {
+  create: [PostCreateWithoutAuthorInput!]
+  delete: [PostWhereUniqueInput!]
+  connect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [PostScalarWhereInput!]
+  updateMany: [PostUpdateManyWithWhereNestedInput!]
+}
+
+input PostUpdateManyWithWhereNestedInput {
+  where: PostScalarWhereInput!
+  data: PostUpdateManyDataInput!
+}
+
+input PostUpdateskillsInput {
   set: [String!]
+}
+
+input PostUpdateWithoutAuthorDataInput {
+  title: String
+  companyName: String
+  description: String
+  location: String
+  salary: Int
+  currency: String
+  category: String
+  skills: PostUpdateskillsInput
+  type: String
+}
+
+input PostUpdateWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutAuthorDataInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutAuthorInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutAuthorDataInput!
+  create: PostCreateWithoutAuthorInput!
 }
 
 input PostWhereInput {
@@ -185,56 +532,20 @@ input PostWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
-  location: String
-  location_not: String
-  location_in: [String!]
-  location_not_in: [String!]
-  location_lt: String
-  location_lte: String
-  location_gt: String
-  location_gte: String
-  location_contains: String
-  location_not_contains: String
-  location_starts_with: String
-  location_not_starts_with: String
-  location_ends_with: String
-  location_not_ends_with: String
-  offer: Int
-  offer_not: Int
-  offer_in: [Int!]
-  offer_not_in: [Int!]
-  offer_lt: Int
-  offer_lte: Int
-  offer_gt: Int
-  offer_gte: Int
-  currency: String
-  currency_not: String
-  currency_in: [String!]
-  currency_not_in: [String!]
-  currency_lt: String
-  currency_lte: String
-  currency_gt: String
-  currency_gte: String
-  currency_contains: String
-  currency_not_contains: String
-  currency_starts_with: String
-  currency_not_starts_with: String
-  currency_ends_with: String
-  currency_not_ends_with: String
+  companyName: String
+  companyName_not: String
+  companyName_in: [String!]
+  companyName_not_in: [String!]
+  companyName_lt: String
+  companyName_lte: String
+  companyName_gt: String
+  companyName_gte: String
+  companyName_contains: String
+  companyName_not_contains: String
+  companyName_starts_with: String
+  companyName_not_starts_with: String
+  companyName_ends_with: String
+  companyName_not_ends_with: String
   description: String
   description_not: String
   description_in: [String!]
@@ -249,6 +560,87 @@ input PostWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  salary: Int
+  salary_not: Int
+  salary_in: [Int!]
+  salary_not_in: [Int!]
+  salary_lt: Int
+  salary_lte: Int
+  salary_gt: Int
+  salary_gte: Int
+  currency: String
+  currency_not: String
+  currency_in: [String!]
+  currency_not_in: [String!]
+  currency_lt: String
+  currency_lte: String
+  currency_gt: String
+  currency_gte: String
+  currency_contains: String
+  currency_not_contains: String
+  currency_starts_with: String
+  currency_not_starts_with: String
+  currency_ends_with: String
+  currency_not_ends_with: String
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  type: String
+  type_not: String
+  type_in: [String!]
+  type_not_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_gt: String
+  type_gte: String
+  type_contains: String
+  type_not_contains: String
+  type_starts_with: String
+  type_not_starts_with: String
+  type_ends_with: String
+  type_not_ends_with: String
+  author: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [PostWhereInput!]
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
@@ -259,6 +651,9 @@ input PostWhereUniqueInput {
 }
 
 type Query {
+  emailVerificationHash(where: EmailVerificationHashWhereUniqueInput!): EmailVerificationHash
+  emailVerificationHashes(where: EmailVerificationHashWhereInput, orderBy: EmailVerificationHashOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [EmailVerificationHash]!
+  emailVerificationHashesConnection(where: EmailVerificationHashWhereInput, orderBy: EmailVerificationHashOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EmailVerificationHashConnection!
   post(where: PostWhereUniqueInput!): Post
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
@@ -269,6 +664,7 @@ type Query {
 }
 
 type Subscription {
+  emailVerificationHash(where: EmailVerificationHashSubscriptionWhereInput): EmailVerificationHashSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -284,6 +680,12 @@ type User {
   headline: String
   skills: [String!]!
   about: String
+  active: Boolean!
+  yearsOfExperience: String
+  degree: String
+  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -303,10 +705,35 @@ input UserCreateInput {
   headline: String
   skills: UserCreateskillsInput
   about: String
+  active: Boolean
+  yearsOfExperience: String
+  degree: String
+  posts: PostCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateskillsInput {
   set: [String!]
+}
+
+input UserCreateWithoutPostsInput {
+  id: ID
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  country: String
+  phoneNumber: String
+  headline: String
+  skills: UserCreateskillsInput
+  about: String
+  active: Boolean
+  yearsOfExperience: String
+  degree: String
 }
 
 type UserEdge {
@@ -333,6 +760,16 @@ enum UserOrderByInput {
   headline_DESC
   about_ASC
   about_DESC
+  active_ASC
+  active_DESC
+  yearsOfExperience_ASC
+  yearsOfExperience_DESC
+  degree_ASC
+  degree_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -346,6 +783,11 @@ type UserPreviousValues {
   headline: String
   skills: [String!]!
   about: String
+  active: Boolean!
+  yearsOfExperience: String
+  degree: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -376,6 +818,10 @@ input UserUpdateInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
+  active: Boolean
+  yearsOfExperience: String
+  degree: String
+  posts: PostUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
@@ -388,10 +834,40 @@ input UserUpdateManyMutationInput {
   headline: String
   skills: UserUpdateskillsInput
   about: String
+  active: Boolean
+  yearsOfExperience: String
+  degree: String
+}
+
+input UserUpdateOneRequiredWithoutPostsInput {
+  create: UserCreateWithoutPostsInput
+  update: UserUpdateWithoutPostsDataInput
+  upsert: UserUpsertWithoutPostsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateskillsInput {
   set: [String!]
+}
+
+input UserUpdateWithoutPostsDataInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  country: String
+  phoneNumber: String
+  headline: String
+  skills: UserUpdateskillsInput
+  about: String
+  active: Boolean
+  yearsOfExperience: String
+  degree: String
+}
+
+input UserUpsertWithoutPostsInput {
+  update: UserUpdateWithoutPostsDataInput!
+  create: UserCreateWithoutPostsInput!
 }
 
 input UserWhereInput {
@@ -521,6 +997,55 @@ input UserWhereInput {
   about_not_starts_with: String
   about_ends_with: String
   about_not_ends_with: String
+  active: Boolean
+  active_not: Boolean
+  yearsOfExperience: String
+  yearsOfExperience_not: String
+  yearsOfExperience_in: [String!]
+  yearsOfExperience_not_in: [String!]
+  yearsOfExperience_lt: String
+  yearsOfExperience_lte: String
+  yearsOfExperience_gt: String
+  yearsOfExperience_gte: String
+  yearsOfExperience_contains: String
+  yearsOfExperience_not_contains: String
+  yearsOfExperience_starts_with: String
+  yearsOfExperience_not_starts_with: String
+  yearsOfExperience_ends_with: String
+  yearsOfExperience_not_ends_with: String
+  degree: String
+  degree_not: String
+  degree_in: [String!]
+  degree_not_in: [String!]
+  degree_lt: String
+  degree_lte: String
+  degree_gt: String
+  degree_gte: String
+  degree_contains: String
+  degree_not_contains: String
+  degree_starts_with: String
+  degree_not_starts_with: String
+  degree_ends_with: String
+  degree_not_ends_with: String
+  posts_every: PostWhereInput
+  posts_some: PostWhereInput
+  posts_none: PostWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

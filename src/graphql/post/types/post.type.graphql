@@ -1,39 +1,55 @@
 type Post {
   id: ID!
   title: String!
-  category: String!
-  location: String!
-  offer: Int!
-  currency: String!
+  companyName: String!
   description: String!
-  skillsRequired: [String!]!
+  location: String!
+  salary: Int!
+  currency: String!
+  category: String!
+  skills: [String!]!
+  type: String!
+  author: User!
+  updatedAt: String!
+  createdAt: String!
 }
 
 type Query {
-  post(id: ID!): Post
-  posts: [Post!]!
+  post(id: ID!): Post!
+  posts(
+    skip: Int
+    first: Int
+    last: Int
+    filter: String
+    location: String
+    category: String
+  ): [Post!]!
 }
 
 type Mutation {
   createPost(
     title: String!
-    category: String!
-    location: String!
-    offer: Int!
-    currency: String!
+    companyName: String!
     description: String!
-    skillsRequired: [String!]!
+    location: String!
+    salary: Int!
+    currency: String!
+    category: String!
+    skills: [String!]!
+    type: String!
   ): Post!
 
   updatePost(
     id: ID!
     title: String
-    category: String
-    location: String
-    offer: Int
-    currency: String
+    companyName: String
     description: String
-    skillsRequired: [String!]
+    location: String
+    salary: Int
+    currency: String
+    category: String
+    skills: [String!]
+    type: String
   ): Post!
 
   deletePost(id: ID!): String

@@ -11,11 +11,15 @@ var models = [
   {
     name: "Post",
     embedded: false
+  },
+  {
+    name: "EmailVerificationHash",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://192.168.99.100:4466`
+  endpoint: `http://localhost:4466`
 });
 exports.prisma = new exports.Prisma();
