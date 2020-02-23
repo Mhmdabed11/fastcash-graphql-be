@@ -12,7 +12,6 @@ const permissions = shield({
     post: isAuthenticated
   },
   Mutation: {
-    signup: not(isAuthenticated),
     login: not(isAuthenticated),
     updateUser: isAuthenticated,
     deleteUser: isAuthenticated,

@@ -1,9 +1,10 @@
 type User {
   id: ID! @id
   firstName: String!
+  profilePicture:String
   lastName: String!
   email: String! @unique
-  password: String!
+  password: String
   country: String
   phoneNumber: String
   headline: String

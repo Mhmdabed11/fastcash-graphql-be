@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel -d ./dist ./src --copy-files",
-    "start": "npm run build && node dist/server.js"
+    "start": "docker-compose up -d && nodemon --exec babel-node ./src/server.js "
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "@babel/runtime": "^7.8.4",
     "@sendgrid/mail": "^6.4.0",
     "apollo-server-core": "^2.9.13",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "graphql-shield": "^7.0.4",
     "graphql-yoga": "^1.18.3",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/register": "^7.8.3",
