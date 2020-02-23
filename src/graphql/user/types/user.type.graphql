@@ -5,16 +5,7 @@ type Query {
 
 # Mutations
 type Mutation {
-  signup(
-    firstName: String!
-    lastName: String!
-    email: String!
-    country: String!
-    password: String!
-    confirmPassword: String!
-  ): AuthyPayload
-
-  login(email: String!, password: String!): AuthyPayload
+  login(accessToken: String!, authType: String!): AuthyPayload
 
   updateUser(
     firstName: String
@@ -42,7 +33,8 @@ type User {
   firstName: String!
   lastName: String!
   email: String!
-  country: String!
+  profilePicture: String
+  country: String
   phoneNumber: String
   headline: String
   skills: [String!]

@@ -672,9 +672,10 @@ type Subscription {
 type User {
   id: ID!
   firstName: String!
+  profilePicture: String
   lastName: String!
   email: String!
-  password: String!
+  password: String
   country: String
   phoneNumber: String
   headline: String
@@ -697,9 +698,10 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   firstName: String!
+  profilePicture: String
   lastName: String!
   email: String!
-  password: String!
+  password: String
   country: String
   phoneNumber: String
   headline: String
@@ -723,9 +725,10 @@ input UserCreateskillsInput {
 input UserCreateWithoutPostsInput {
   id: ID
   firstName: String!
+  profilePicture: String
   lastName: String!
   email: String!
-  password: String!
+  password: String
   country: String
   phoneNumber: String
   headline: String
@@ -746,6 +749,8 @@ enum UserOrderByInput {
   id_DESC
   firstName_ASC
   firstName_DESC
+  profilePicture_ASC
+  profilePicture_DESC
   lastName_ASC
   lastName_DESC
   email_ASC
@@ -775,9 +780,10 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   firstName: String!
+  profilePicture: String
   lastName: String!
   email: String!
-  password: String!
+  password: String
   country: String
   phoneNumber: String
   headline: String
@@ -810,6 +816,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   firstName: String
+  profilePicture: String
   lastName: String
   email: String
   password: String
@@ -826,6 +833,7 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   firstName: String
+  profilePicture: String
   lastName: String
   email: String
   password: String
@@ -852,6 +860,7 @@ input UserUpdateskillsInput {
 
 input UserUpdateWithoutPostsDataInput {
   firstName: String
+  profilePicture: String
   lastName: String
   email: String
   password: String
@@ -899,6 +908,20 @@ input UserWhereInput {
   firstName_not_starts_with: String
   firstName_ends_with: String
   firstName_not_ends_with: String
+  profilePicture: String
+  profilePicture_not: String
+  profilePicture_in: [String!]
+  profilePicture_not_in: [String!]
+  profilePicture_lt: String
+  profilePicture_lte: String
+  profilePicture_gt: String
+  profilePicture_gte: String
+  profilePicture_contains: String
+  profilePicture_not_contains: String
+  profilePicture_starts_with: String
+  profilePicture_not_starts_with: String
+  profilePicture_ends_with: String
+  profilePicture_not_ends_with: String
   lastName: String
   lastName_not: String
   lastName_in: [String!]
